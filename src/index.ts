@@ -138,12 +138,8 @@ export default function initPadatika(
   ] as HTMLElement[];
   if (sups.length == 0) return;
 
-  const defaultCategoryId = Object.entries(
-    categoryIdToCategoryIndicatorMap,
-  ).find((entry) => entry[1] === '')?.[0];
-
   sups.forEach((sup) => {
-    const regex = /^(([\w-]+):)?([\w-]+)?$/;
+    const regex = /^([\w-]+):([\w-]+)$/;
     const match = (sup.textContent as string).trim().match(regex);
 
     const anchor = elt('a') as HTMLAnchorElement;
@@ -156,90 +152,84 @@ export default function initPadatika(
     };
 
     if (match) {
-      const name = match[3];
-      const categoryId = match[2] || defaultCategoryId;
+      const footnoteName = match[2];
+      const categoryId = match[1];
 
-      if (categoryId === undefined) {
-        renderAnchor(true, 'No default Category exists');
-      } else {
-        const heading = categoryIdToHeadingMap[categoryId];
-        const categoryIndicator = categoryIdToCategoryIndicatorMap[categoryId];
-        const categoryIndicatorFormatted = categoryIndicator
-          ? categoryIndicator + ' '
-          : '';
-        if (heading) {
-          const li = addressToInfoMap[`${categoryId}:${name}`]?.li; // the optional chain is important
-          if (li) {
-            const addressInfo = addressToInfoMap[`${categoryId}:${name}`];
-            addressInfo.refs.push(anchor);
-            anchor.id = getUniqueId(`${li.id}-ref-${addressInfo.refs.length}`);
-            anchor.addEventListener('click', () => {
-              cleanupFunc();
-              if (addressInfo.refs.length > 1) {
-                const backlinksWrapper = addressInfo.backlinksWrapper;
-                const targetedBacklink =
-                  backlinksWrapper.querySelector<HTMLAnchorElement>(
-                    `[href="#${anchor.id}"]`,
-                  )!;
-                const targetedBacklinkClassName = 'padatika-targeted-backlink';
+      const heading = categoryIdToHeadingMap[categoryId];
+      const categoryIndicator = categoryIdToCategoryIndicatorMap[categoryId];
+      const categoryIndicatorFormatted = categoryIndicator
+        ? categoryIndicator + ' '
+        : '';
+      if (heading) {
+        const li = addressToInfoMap[`${categoryId}:${footnoteName}`]?.li; // the optional chain is important
+        if (li) {
+          const addressInfo = addressToInfoMap[`${categoryId}:${footnoteName}`];
+          addressInfo.refs.push(anchor);
+          anchor.id = getUniqueId(`${li.id}-ref-${addressInfo.refs.length}`);
+          anchor.addEventListener('click', () => {
+            cleanupFunc();
+            if (addressInfo.refs.length > 1) {
+              const backlinksWrapper = addressInfo.backlinksWrapper;
+              const targetedBacklink =
+                backlinksWrapper.querySelector<HTMLAnchorElement>(
+                  `[href="#${anchor.id}"]`,
+                )!;
+              const targetedBacklinkClassName = 'padatika-targeted-backlink';
 
-                cleanupFunc = () => {
-                  if (cleanupNeeded) {
-                    targetedBacklink.classList.remove(
-                      targetedBacklinkClassName,
-                    );
-                    backlinksWrapper.firstChild!.replaceWith(backlinkSymbol);
-                    cleanupNeeded = false;
-                  }
-                };
-
-                targetedBacklink.classList.add(targetedBacklinkClassName);
-
-                const backlink = elt('a') as HTMLAnchorElement;
-                backlink.textContent = backlinkSymbol;
-                backlink.href = targetedBacklink.href;
-                backlink.addEventListener('click', cleanupFunc);
-
-                const backlinkSymbolTextNode =
-                  backlinksWrapper.firstChild! as Text;
-                backlinkSymbolTextNode.replaceWith(backlink);
-
-                cleanupNeeded = true;
-              }
-            });
-            if (categoryIdToRefInfo[categoryId]) {
-              if (addressInfo.refs.length === 1) {
-                const info = categoryIdToRefInfo[categoryId];
-                info.parentOL.append(li);
-                info.uniqueRefCount++;
-                addressInfo.refsNum = info.uniqueRefCount;
-              }
-              renderAnchor(
-                false,
-                `${categoryIndicatorFormatted}${addressInfo.refsNum}`,
-                `#${li.id}`,
-              );
-            } else {
-              const ol = elt('ol') as HTMLOListElement;
-              ol.append(li);
-              categoryIdToRefInfo[categoryId] = {
-                uniqueRefCount: 1,
-                parentOL: ol,
+              cleanupFunc = () => {
+                if (cleanupNeeded) {
+                  targetedBacklink.classList.remove(targetedBacklinkClassName);
+                  backlinksWrapper.firstChild!.replaceWith(backlinkSymbol);
+                  cleanupNeeded = false;
+                }
               };
-              addressInfo.refsNum = 1;
-              renderAnchor(
-                false,
-                `${categoryIndicatorFormatted}${1}`,
-                `#${li.id}`,
-              );
-              heading.insertAdjacentElement('afterend', ol);
+
+              targetedBacklink.classList.add(targetedBacklinkClassName);
+
+              const backlink = elt('a') as HTMLAnchorElement;
+              backlink.textContent = backlinkSymbol;
+              backlink.href = targetedBacklink.href;
+              backlink.addEventListener('click', cleanupFunc);
+
+              const backlinkSymbolTextNode =
+                backlinksWrapper.firstChild! as Text;
+              backlinkSymbolTextNode.replaceWith(backlink);
+
+              cleanupNeeded = true;
             }
+          });
+          if (categoryIdToRefInfo[categoryId]) {
+            if (addressInfo.refs.length === 1) {
+              const info = categoryIdToRefInfo[categoryId];
+              info.parentOL.append(li);
+              info.uniqueRefCount++;
+              addressInfo.refsNum = info.uniqueRefCount;
+            }
+            renderAnchor(
+              false,
+              `${categoryIndicatorFormatted}${addressInfo.refsNum}`,
+              `#${li.id}`,
+            );
           } else {
-            renderAnchor(true, 'Target not found');
+            const ol = elt('ol') as HTMLOListElement;
+            ol.append(li);
+            categoryIdToRefInfo[categoryId] = {
+              uniqueRefCount: 1,
+              parentOL: ol,
+            };
+            addressInfo.refsNum = 1;
+            renderAnchor(
+              false,
+              `${categoryIndicatorFormatted}${1}`,
+              `#${li.id}`,
+            );
+            heading.insertAdjacentElement('afterend', ol);
           }
         } else {
-          renderAnchor(true, match.input as string);
+          renderAnchor(true, 'Target not found');
         }
+      } else {
+        renderAnchor(true, match.input as string);
       }
     } else {
       renderAnchor(true, 'Invalid ref syntax');
@@ -251,7 +241,7 @@ export default function initPadatika(
     const backlinksWrapper = info.backlinksWrapper;
 
     if (refsCount == 0) {
-      console.warn(`Footnote of identifier "${address}" have no references.`);
+      console.warn(`Footnote of address "${address}" have no references.`);
     } else if (refsCount == 1) {
       const backlink = elt('a') as HTMLAnchorElement;
       backlink.textContent = backlinkSymbol;
