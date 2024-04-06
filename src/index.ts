@@ -14,7 +14,7 @@ const defaultOptions: Options = {
 };
 
 export default function initPadatika(
-  idToInitialMap: {
+  categoryIdToCategoryAliasMap: {
     [x: string]: string;
   },
   {
@@ -41,11 +41,11 @@ export default function initPadatika(
     };
   } = {};
 
-  const idToHeadingMap: {
+  const categoryIdToHeadingMap: {
     [x: string]: HTMLHeadingElement;
   } = {};
 
-  const idToRefInfo: {
+  const categoryIdToRefInfo: {
     [x: string]: {
       uniqueRefCount: number;
       parentOL: HTMLOListElement;
@@ -55,14 +55,14 @@ export default function initPadatika(
   let cleanupFunc = () => {};
   let cleanupNeeded = false;
 
-  for (const [id] of Object.entries(idToInitialMap)) {
-    const heading = document.querySelector<HTMLHeadingElement>(`#${id}`);
+  for (const categoryId of Object.keys(categoryIdToCategoryAliasMap)) {
+    const heading = document.querySelector<HTMLHeadingElement>(
+      `#${categoryId}`,
+    );
 
-    if (!heading) {
-      continue;
-    }
+    if (!heading) continue;
 
-    idToHeadingMap[id] = heading;
+    categoryIdToHeadingMap[categoryId] = heading;
 
     const ul =
       heading?.nextElementSibling?.tagName == 'UL' &&
@@ -74,7 +74,7 @@ export default function initPadatika(
         const li = ul.children[i] as HTMLLIElement;
         const name = extractPadatikaName(li);
         if (name != '') {
-          const address = `${id}:${name}`;
+          const address = `${categoryId}:${name}`;
           if (!addressToInfoMap[address]) {
             const backlinksWrapper = elt(
               'span',
@@ -123,7 +123,7 @@ export default function initPadatika(
             }
           } else {
             console.warn(
-              `Footnote ignored for duplicate name(${name}) in same category(${id}): ${li.textContent}`,
+              `Footnote ignored for duplicate name(${name}) in same category(${categoryId}): ${li.textContent}`,
             );
           }
         } else {
@@ -138,7 +138,7 @@ export default function initPadatika(
   ] as HTMLElement[];
   if (sups.length == 0) return;
 
-  const defaultId = Object.entries(idToInitialMap).find(
+  const defaultCategoryId = Object.entries(categoryIdToCategoryAliasMap).find(
     (entry) => entry[1] === '',
   )?.[0];
 
@@ -157,18 +157,18 @@ export default function initPadatika(
 
     if (match) {
       const name = match[3];
-      const id = match[2] || defaultId;
+      const categoryId = match[2] || defaultCategoryId;
 
-      if (id === undefined) {
+      if (categoryId === undefined) {
         renderAnchor(true, 'No default Category exists');
       } else {
-        const heading = idToHeadingMap[id];
-        const categoryAlias = idToInitialMap[id];
+        const heading = categoryIdToHeadingMap[categoryId];
+        const categoryAlias = categoryIdToCategoryAliasMap[categoryId];
         const categoryAliasFormatted = categoryAlias ? categoryAlias + ' ' : '';
         if (heading) {
-          const li = addressToInfoMap[`${id}:${name}`]?.li; // the optional chain is important
+          const li = addressToInfoMap[`${categoryId}:${name}`]?.li; // the optional chain is important
           if (li) {
-            const addressInfo = addressToInfoMap[`${id}:${name}`];
+            const addressInfo = addressToInfoMap[`${categoryId}:${name}`];
             addressInfo.refs.push(anchor);
             anchor.id = getUniqueId(`${li.id}-ref-${addressInfo.refs.length}`);
             anchor.addEventListener('click', () => {
@@ -205,9 +205,9 @@ export default function initPadatika(
                 cleanupNeeded = true;
               }
             });
-            if (idToRefInfo[id]) {
+            if (categoryIdToRefInfo[categoryId]) {
               if (addressInfo.refs.length === 1) {
-                const info = idToRefInfo[id];
+                const info = categoryIdToRefInfo[categoryId];
                 info.parentOL.append(li);
                 info.uniqueRefCount++;
                 addressInfo.refsNum = info.uniqueRefCount;
@@ -220,7 +220,7 @@ export default function initPadatika(
             } else {
               const ol = elt('ol') as HTMLOListElement;
               ol.append(li);
-              idToRefInfo[id] = {
+              categoryIdToRefInfo[categoryId] = {
                 uniqueRefCount: 1,
                 parentOL: ol,
               };
