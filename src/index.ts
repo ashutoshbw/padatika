@@ -1,16 +1,16 @@
-import { elt, getUniqueId, extractPadatikaName } from "./utils.js";
+import { elt, getUniqueId, extractPadatikaName } from './utils.js';
 
 interface Options {
   locale?: string;
-  backlinkPos?: "start" | "end";
+  backlinkPos?: 'start' | 'end';
   backlinkSymbol?: string;
   getBacklinkIdentifier?: (n: number) => string;
 }
 
 const defaultOptions: Options = {
-  locale: "en-US",
-  backlinkPos: "start",
-  backlinkSymbol: "↑",
+  locale: 'en-US',
+  backlinkPos: 'start',
+  backlinkSymbol: '↑',
 };
 
 export default function initPadatika(
@@ -18,9 +18,9 @@ export default function initPadatika(
     [x: string]: string;
   },
   {
-    locale = "en-US",
-    backlinkPos = "start",
-    backlinkSymbol = "↑",
+    locale = 'en-US',
+    backlinkPos = 'start',
+    backlinkSymbol = '↑',
     getBacklinkIdentifier,
   }: Options = defaultOptions,
 ) {
@@ -66,7 +66,7 @@ export default function initPadatika(
     idToHeadingMap[id] = heading;
 
     const ul =
-      heading?.nextElementSibling?.tagName == "UL" &&
+      heading?.nextElementSibling?.tagName == 'UL' &&
       (heading.nextElementSibling as HTMLUListElement);
 
     if (ul) {
@@ -74,12 +74,12 @@ export default function initPadatika(
       for (let i = 0; i < ul.children.length; i++) {
         const li = ul.children[i] as HTMLLIElement;
         const name = extractPadatikaName(li);
-        if (name != "") {
+        if (name != '') {
           const address = `${id}:${name}`;
           if (!addressToInfoMap[address]) {
             const backlinksWrapper = elt(
-              "span",
-              "backlink-wrapper",
+              'span',
+              'backlink-wrapper',
             ) as HTMLSpanElement;
 
             li.id = getUniqueId(`padatika-${address}`);
@@ -91,13 +91,13 @@ export default function initPadatika(
               refsNum: 0,
             };
 
-            if (backlinkPos == "end") {
-              if (li.lastElementChild?.tagName == "P") {
+            if (backlinkPos == 'end') {
+              if (li.lastElementChild?.tagName == 'P') {
                 const p = li.lastElementChild as HTMLParagraphElement;
                 const node = p.nextSibling;
                 if (
                   node?.nodeType === Node.TEXT_NODE &&
-                  (node as Text).wholeText.trim() != ""
+                  (node as Text).wholeText.trim() != ''
                 ) {
                   li.append(backlinksWrapper);
                 } else {
@@ -106,13 +106,13 @@ export default function initPadatika(
               } else {
                 li.append(backlinksWrapper);
               }
-            } else if (backlinkPos == "start") {
-              if (li.firstElementChild?.tagName == "P") {
+            } else if (backlinkPos == 'start') {
+              if (li.firstElementChild?.tagName == 'P') {
                 const p = li.firstElementChild as HTMLParagraphElement;
                 const node = p.previousSibling;
                 if (
                   node?.nodeType === Node.TEXT_NODE &&
-                  (node as Text).wholeText.trim() != ""
+                  (node as Text).wholeText.trim() != ''
                 ) {
                   li.prepend(backlinksWrapper);
                 } else {
@@ -135,25 +135,25 @@ export default function initPadatika(
   }
 
   const sups = [
-    ...document.querySelectorAll("[data-padatika]"),
+    ...document.querySelectorAll('[data-padatika]'),
   ] as HTMLElement[];
   if (sups.length == 0) return;
 
   const defaultId = Object.entries(idToInitialMap).find(
-    (entry) => entry[1] === "",
+    (entry) => entry[1] === '',
   )?.[0];
 
   sups.forEach((sup) => {
     const regex = /^(([\w-]+):)?([\w-]+)?$/;
     const match = (sup.textContent as string).trim().match(regex);
 
-    const anchor = elt("a") as HTMLAnchorElement;
+    const anchor = elt('a') as HTMLAnchorElement;
     const renderAnchor = (err: boolean, content: string, href?: string) => {
       sup.replaceChildren(anchor);
       anchor.textContent = `[${content}]`;
       if (href) anchor.href = href;
-      if (err) anchor.style.color = "red";
-      sup.removeAttribute("data-padatika");
+      if (err) anchor.style.color = 'red';
+      sup.removeAttribute('data-padatika');
     };
 
     if (match) {
@@ -161,18 +161,18 @@ export default function initPadatika(
       const id = match[2] || defaultId;
 
       if (id === undefined) {
-        renderAnchor(true, "No default Category exists");
+        renderAnchor(true, 'No default Category exists');
       } else {
         const heading = idToHeadingMap[id];
         const categoryAlias = idToInitialMap[id];
-        const categoryAliasFormatted = categoryAlias ? categoryAlias + " " : "";
+        const categoryAliasFormatted = categoryAlias ? categoryAlias + ' ' : '';
         if (heading) {
           const li = addressToInfoMap[`${id}:${name}`]?.li; // the optional chain is important
           if (li) {
             const addressInfo = addressToInfoMap[`${id}:${name}`];
             addressInfo.refs.push(anchor);
             anchor.id = getUniqueId(`${li.id}-ref-${addressInfo.refs.length}`);
-            anchor.addEventListener("click", () => {
+            anchor.addEventListener('click', () => {
               cleanupFunc();
               if (addressInfo.refs.length > 1) {
                 const backlinksWrapper = addressInfo.backlinksWrapper;
@@ -180,7 +180,7 @@ export default function initPadatika(
                   backlinksWrapper.querySelector<HTMLAnchorElement>(
                     `[href="#${anchor.id}"]`,
                   )!;
-                const targetedBacklinkClassName = "padatika-targeted-backlink";
+                const targetedBacklinkClassName = 'padatika-targeted-backlink';
 
                 cleanupFunc = () => {
                   if (cleanupNeeded) {
@@ -194,10 +194,10 @@ export default function initPadatika(
 
                 targetedBacklink.classList.add(targetedBacklinkClassName);
 
-                const backlink = elt("a") as HTMLAnchorElement;
+                const backlink = elt('a') as HTMLAnchorElement;
                 backlink.textContent = backlinkSymbol;
                 backlink.href = targetedBacklink.href;
-                backlink.addEventListener("click", cleanupFunc);
+                backlink.addEventListener('click', cleanupFunc);
 
                 const backlinkSymbolTextNode =
                   backlinksWrapper.firstChild! as Text;
@@ -219,7 +219,7 @@ export default function initPadatika(
                 `#${li.id}`,
               );
             } else {
-              const ol = elt("ol") as HTMLOListElement;
+              const ol = elt('ol') as HTMLOListElement;
               ol.append(li);
               idToRefInfo[id] = {
                 uniqueRefCount: 1,
@@ -227,17 +227,17 @@ export default function initPadatika(
               };
               addressInfo.refsNum = 1;
               renderAnchor(false, `${categoryAliasFormatted}${1}`, `#${li.id}`);
-              heading.insertAdjacentElement("afterend", ol);
+              heading.insertAdjacentElement('afterend', ol);
             }
           } else {
-            renderAnchor(true, "Target not found");
+            renderAnchor(true, 'Target not found');
           }
         } else {
-          renderAnchor(true, "Category not matched");
+          renderAnchor(true, 'Category not matched');
         }
       }
     } else {
-      renderAnchor(true, "Invalid ref syntax");
+      renderAnchor(true, 'Invalid ref syntax');
     }
   });
 
@@ -248,22 +248,22 @@ export default function initPadatika(
     if (refsCount == 0) {
       console.warn(`Footnote of identifier "${address}" have no references.`);
     } else if (refsCount == 1) {
-      const backlink = elt("a") as HTMLAnchorElement;
+      const backlink = elt('a') as HTMLAnchorElement;
       backlink.textContent = backlinkSymbol;
       backlink.href = `#${info.refs[0].id}`;
       backlinksWrapper.append(backlink);
-      backlink.addEventListener("click", () => cleanupFunc());
+      backlink.addEventListener('click', () => cleanupFunc());
     } else {
       backlinksWrapper.append(backlinkSymbol);
       info.refs.forEach((ref, i) => {
-        const backlink = elt("a") as HTMLAnchorElement;
-        const sup = elt("sup") as HTMLElement;
+        const backlink = elt('a') as HTMLAnchorElement;
+        const sup = elt('sup') as HTMLElement;
         sup.append(backlink);
         backlinksWrapper.append(sup);
 
         backlink.href = `#${ref.id}`;
         backlink.textContent = getBacklinkIdentifier!(i);
-        backlink.addEventListener("click", () => cleanupFunc());
+        backlink.addEventListener('click', () => cleanupFunc());
       });
     }
   });

@@ -15,7 +15,7 @@ export function getUniqueId(startString: string) {
 
 export function extractPadatikaName(elt: Element) {
   let nonSpaceTextFound = false;
-  let name = "";
+  let name = '';
   function process(elt: Element) {
     if (nonSpaceTextFound) return;
     const childNodes = elt.childNodes;
@@ -30,7 +30,7 @@ export function extractPadatikaName(elt: Element) {
           const match = text.match(nameRegex);
           if (match) {
             name = match[1];
-            (node as Text).data = (node as Text).data.replace(nameRegex, "");
+            (node as Text).data = (node as Text).data.replace(nameRegex, '');
           }
           return;
         } else {

@@ -22,7 +22,7 @@ Now you can use it your script in the ESM way:
 
 ```html
 <script type="module">
-  import initPadatika from "padatika";
+  import initPadatika from 'padatika';
 </script>
 ```
 
@@ -41,7 +41,7 @@ You can mix all kinds of footnotes in a single section possibly with a heading n
 It all starts with initialzing padatika by passing an object to it. Below is an example:
 
 ```js
-initPadatika({ notes: "" });
+initPadatika({ notes: '' });
 ```
 
 Here `notes` is your choosen id of the heading element of a category of footnotes you want to create. We will see very soon the role of the `""` that is passed to `notes`. Padatika will look for the heading element with id `notes`. The HTML for the heading would possibly will look like below:
