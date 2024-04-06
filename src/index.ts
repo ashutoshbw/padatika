@@ -14,7 +14,7 @@ const defaultOptions: Options = {
 };
 
 export default function initPadatika(
-  categoryIdToCategoryAliasMap: {
+  categoryIdToCategoryIndicatorMap: {
     [x: string]: string;
   },
   {
@@ -55,7 +55,7 @@ export default function initPadatika(
   let cleanupFunc = () => {};
   let cleanupNeeded = false;
 
-  for (const categoryId of Object.keys(categoryIdToCategoryAliasMap)) {
+  for (const categoryId of Object.keys(categoryIdToCategoryIndicatorMap)) {
     const heading = document.querySelector<HTMLHeadingElement>(
       `#${categoryId}`,
     );
@@ -138,9 +138,9 @@ export default function initPadatika(
   ] as HTMLElement[];
   if (sups.length == 0) return;
 
-  const defaultCategoryId = Object.entries(categoryIdToCategoryAliasMap).find(
-    (entry) => entry[1] === '',
-  )?.[0];
+  const defaultCategoryId = Object.entries(
+    categoryIdToCategoryIndicatorMap,
+  ).find((entry) => entry[1] === '')?.[0];
 
   sups.forEach((sup) => {
     const regex = /^(([\w-]+):)?([\w-]+)?$/;
@@ -163,8 +163,10 @@ export default function initPadatika(
         renderAnchor(true, 'No default Category exists');
       } else {
         const heading = categoryIdToHeadingMap[categoryId];
-        const categoryAlias = categoryIdToCategoryAliasMap[categoryId];
-        const categoryAliasFormatted = categoryAlias ? categoryAlias + ' ' : '';
+        const categoryIndicator = categoryIdToCategoryIndicatorMap[categoryId];
+        const categoryIndicatorFormatted = categoryIndicator
+          ? categoryIndicator + ' '
+          : '';
         if (heading) {
           const li = addressToInfoMap[`${categoryId}:${name}`]?.li; // the optional chain is important
           if (li) {
@@ -214,7 +216,7 @@ export default function initPadatika(
               }
               renderAnchor(
                 false,
-                `${categoryAliasFormatted}${addressInfo.refsNum}`,
+                `${categoryIndicatorFormatted}${addressInfo.refsNum}`,
                 `#${li.id}`,
               );
             } else {
@@ -225,7 +227,11 @@ export default function initPadatika(
                 parentOL: ol,
               };
               addressInfo.refsNum = 1;
-              renderAnchor(false, `${categoryAliasFormatted}${1}`, `#${li.id}`);
+              renderAnchor(
+                false,
+                `${categoryIndicatorFormatted}${1}`,
+                `#${li.id}`,
+              );
               heading.insertAdjacentElement('afterend', ol);
             }
           } else {
