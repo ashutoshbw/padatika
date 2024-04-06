@@ -55,11 +55,10 @@ export default function initPadatika(
   let cleanupFunc = () => {};
   let cleanupNeeded = false;
 
-  for (const [id, initial] of Object.entries(idToInitialMap)) {
+  for (const [id] of Object.entries(idToInitialMap)) {
     const heading = document.querySelector<HTMLHeadingElement>(`#${id}`);
 
     if (!heading) {
-      console.error(`Padatika error: Heading with id ${id} doesn't exist`);
       continue;
     }
 
@@ -233,7 +232,7 @@ export default function initPadatika(
             renderAnchor(true, 'Target not found');
           }
         } else {
-          renderAnchor(true, 'Category not matched');
+          renderAnchor(true, match.input as string);
         }
       }
     } else {
