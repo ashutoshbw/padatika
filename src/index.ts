@@ -161,9 +161,9 @@ export default function initPadatika(
         ? categoryIndicator + ' '
         : '';
       if (heading) {
-        const li = addressToInfoMap[`${categoryId}:${footnoteName}`]?.li; // the optional chain is important
+        const addressInfo = addressToInfoMap[`${categoryId}:${footnoteName}`];
+        const li = addressInfo?.li; // the optional chain is important
         if (li) {
-          const addressInfo = addressToInfoMap[`${categoryId}:${footnoteName}`];
           addressInfo.refs.push(anchor);
           anchor.id = getUniqueId(`${li.id}-ref-${addressInfo.refs.length}`);
           anchor.addEventListener('click', () => {
