@@ -6,6 +6,7 @@ interface Options {
   backlinkSymbol?: string;
   getBacklinkIdentifier?: (n: number) => string;
   ignoreIndicatorOfFirstCategory?: boolean;
+  ignoreIndicatorOfCategory?: string;
 }
 
 const defaultOptions: Options = {
@@ -25,6 +26,7 @@ export default function initPadatika(
     backlinkSymbol = '↑',
     getBacklinkIdentifier,
     ignoreIndicatorOfFirstCategory = true,
+    ignoreIndicatorOfCategory,
   }: Options = defaultOptions,
 ) {
   if (getBacklinkIdentifier == undefined) {
@@ -165,10 +167,15 @@ export default function initPadatika(
 
       const heading = categoryIdToHeadingMap[categoryId];
       const categoryIndicator = categoryIdToCategoryIndicatorMap[categoryId];
-      const categoryIndicatorFormatted =
-        ignoreIndicatorOfFirstCategory && categoryId === firstCategoryId
-          ? ''
-          : categoryIndicator + ' ';
+      let categoryIndicatorFormatted = categoryIndicator + ' ';
+
+      if (ignoreIndicatorOfFirstCategory && !ignoreIndicatorOfCategory) {
+        if (categoryId === firstCategoryId) categoryIndicatorFormatted = '';
+      } else if (ignoreIndicatorOfCategory) {
+        if (categoryId === ignoreIndicatorOfCategory)
+          categoryIndicatorFormatted = '';
+      }
+
       if (heading) {
         const addressInfo = addressToInfoMap[`${categoryId}:${footnoteName}`];
         const li = addressInfo?.li; // the optional chain is important
