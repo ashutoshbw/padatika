@@ -5,12 +5,14 @@ interface Options {
   backlinkPos?: 'start' | 'end';
   backlinkSymbol?: string;
   getBacklinkIdentifier?: (n: number) => string;
+  ignoreIndicatorOfFirstCategory?: boolean;
 }
 
 const defaultOptions: Options = {
   locale: 'en-US',
   backlinkPos: 'start',
   backlinkSymbol: '↑',
+  ignoreIndicatorOfFirstCategory: true,
 };
 
 export default function initPadatika(
@@ -22,6 +24,7 @@ export default function initPadatika(
     backlinkPos = 'start',
     backlinkSymbol = '↑',
     getBacklinkIdentifier,
+    ignoreIndicatorOfFirstCategory = true,
   }: Options = defaultOptions,
 ) {
   if (getBacklinkIdentifier == undefined) {
@@ -54,6 +57,7 @@ export default function initPadatika(
 
   let cleanupFunc = () => {};
   let cleanupNeeded = false;
+  let categoryIdsQueryString = '';
 
   for (const categoryId of Object.keys(categoryIdToCategoryIndicatorMap)) {
     const heading = document.querySelector<HTMLHeadingElement>(
@@ -61,6 +65,8 @@ export default function initPadatika(
     );
 
     if (!heading) continue;
+
+    categoryIdsQueryString += `${categoryIdsQueryString == '' ? '' : ' ,'}#${categoryId}`;
 
     categoryIdToHeadingMap[categoryId] = heading;
 
@@ -133,6 +139,8 @@ export default function initPadatika(
     }
   }
 
+  const firstCategoryId = document.querySelector(categoryIdsQueryString)?.id;
+
   const sups = [
     ...document.querySelectorAll('[data-padatika]'),
   ] as HTMLElement[];
@@ -157,9 +165,10 @@ export default function initPadatika(
 
       const heading = categoryIdToHeadingMap[categoryId];
       const categoryIndicator = categoryIdToCategoryIndicatorMap[categoryId];
-      const categoryIndicatorFormatted = categoryIndicator
-        ? categoryIndicator + ' '
-        : '';
+      const categoryIndicatorFormatted =
+        ignoreIndicatorOfFirstCategory && categoryId === firstCategoryId
+          ? ''
+          : categoryIndicator + ' ';
       if (heading) {
         const addressInfo = addressToInfoMap[`${categoryId}:${footnoteName}`];
         const li = addressInfo?.li; // the optional chain is important
