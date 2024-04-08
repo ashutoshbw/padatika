@@ -143,7 +143,9 @@ export default function initPadatika(
             lisToRemove.push(li); // for not collect sups from here
           }
         } else {
-          console.warn(`Footnote lacks a name: ${li.textContent}`);
+          console.warn(
+            `Footnote lacks a name or has invalid one: ${li.textContent}`,
+          );
           lisToRemove.push(li); // for not collect sups from here
         }
       }
