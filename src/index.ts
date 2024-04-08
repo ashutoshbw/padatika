@@ -60,6 +60,8 @@ export default function initPadatika(
   let cleanupFunc = () => {};
   let cleanupNeeded = false;
   let categoryIdsQueryString = '';
+  const ulsToRemove: HTMLUListElement[] = [];
+  const lisToRemove: HTMLLIElement[] = [];
 
   for (const categoryId of Object.keys(categoryIdToCategoryIndicatorMap)) {
     const heading = document.querySelector<HTMLHeadingElement>(
@@ -77,7 +79,7 @@ export default function initPadatika(
       (heading.nextElementSibling as HTMLUListElement);
 
     if (ul) {
-      ul.remove();
+      ulsToRemove.push(ul);
       for (let i = 0; i < ul.children.length; i++) {
         const li = ul.children[i] as HTMLLIElement;
         const name = extractPadatikaName(li);
@@ -131,11 +133,13 @@ export default function initPadatika(
             }
           } else {
             console.warn(
-              `Footnote ignored for duplicate name(${name}) in same category(${categoryId}): ${li.textContent}`,
+              `Footnote ignored for duplicate name(${name}) in same category(${categoryId}).`,
             );
+            lisToRemove.push(li); // for not collect sups from here
           }
         } else {
           console.warn(`Footnote lacks a name: ${li.textContent}`);
+          lisToRemove.push(li); // for not collect sups from here
         }
       }
     }
@@ -143,10 +147,14 @@ export default function initPadatika(
 
   const firstCategoryId = document.querySelector(categoryIdsQueryString)?.id;
 
+  lisToRemove.forEach((li) => li.remove());
+
   const sups = [
     ...document.querySelectorAll('[data-padatika]'),
   ] as HTMLElement[];
   if (sups.length == 0) return;
+
+  ulsToRemove.forEach((ul) => ul.remove());
 
   sups.forEach((sup) => {
     const regex = /^([\w-]+):([\w-]+)$/;
@@ -158,7 +166,6 @@ export default function initPadatika(
       anchor.textContent = `[${content}]`;
       if (href) anchor.href = href;
       if (err) anchor.style.color = 'red';
-      sup.removeAttribute('data-padatika');
     };
 
     if (match) {
@@ -180,7 +187,7 @@ export default function initPadatika(
         const addressInfo = addressToInfoMap[`${categoryId}:${footnoteName}`];
         const li = addressInfo?.li; // the optional chain is important
         if (li) {
-          addressInfo.refs.push(anchor);
+          addressInfo.refs.push(anchor); // The anchor could be for a li that will not be displayed
           anchor.id = getUniqueId(`${li.id}-ref-${addressInfo.refs.length}`);
           anchor.addEventListener('click', () => {
             cleanupFunc();
@@ -214,8 +221,10 @@ export default function initPadatika(
               cleanupNeeded = true;
             }
           });
+
           if (categoryIdToRefInfo[categoryId]) {
             if (addressInfo.refs.length === 1) {
+              // i.e. if number of backlinks is 1
               const info = categoryIdToRefInfo[categoryId];
               info.parentOL.append(li);
               info.uniqueRefCount++;
@@ -258,6 +267,12 @@ export default function initPadatika(
 
     if (refsCount == 0) {
       console.warn(`Footnote of address "${address}" have no references.`);
+      const ref = info.li.querySelector('[data-padatika]');
+      if (ref) {
+        console.error(
+          `References from orphan footnote(${address}) can have unexpected output!`,
+        );
+      }
     } else if (refsCount == 1) {
       const backlink = elt('a') as HTMLAnchorElement;
       backlink.textContent = backlinkSymbol;
