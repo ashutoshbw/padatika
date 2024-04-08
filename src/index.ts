@@ -268,38 +268,40 @@ export default function initPadatika(
     }
   });
 
-  if (enableBacklinks) {
-    Object.entries(addressToInfoMap).forEach(([address, info]) => {
-      const refsCount = info.refs.length;
-      const backlinksWrapper = info.backlinksWrapper;
+  Object.entries(addressToInfoMap).forEach(([address, info]) => {
+    const refsCount = info.refs.length;
+    const backlinksWrapper = info.backlinksWrapper;
 
-      if (refsCount == 0) {
-        console.warn(`Footnote of address "${address}" have no references.`);
-        const ref = info.li.querySelector('[data-padatika]');
-        if (ref) {
-          console.error(
-            `References from orphan footnote(${address}) can have unexpected output!`,
-          );
-        }
-      } else if (refsCount == 1) {
-        const backlink = elt('a') as HTMLAnchorElement;
-        backlink.textContent = backlinkSymbol;
-        backlink.href = `#${info.refs[0].id}`;
-        backlinksWrapper.append(backlink);
-        backlink.addEventListener('click', () => cleanupFunc());
-      } else {
-        backlinksWrapper.append(backlinkSymbol);
-        info.refs.forEach((ref, i) => {
-          const backlink = elt('a') as HTMLAnchorElement;
-          const sup = elt('sup') as HTMLElement;
-          sup.append(backlink);
-          backlinksWrapper.append(sup);
-
-          backlink.href = `#${ref.id}`;
-          backlink.textContent = getBacklinkIdentifier!(i);
-          backlink.addEventListener('click', () => cleanupFunc());
-        });
+    if (refsCount == 0) {
+      console.warn(`Footnote of address "${address}" have no references.`);
+      const ref = info.li.querySelector('[data-padatika]');
+      if (ref) {
+        console.error(
+          `References from orphan footnote(${address}) can have unexpected output!`,
+        );
       }
-    });
-  }
+    } else {
+      if (enableBacklinks) {
+        if (refsCount == 1) {
+          const backlink = elt('a') as HTMLAnchorElement;
+          backlink.textContent = backlinkSymbol;
+          backlink.href = `#${info.refs[0].id}`;
+          backlinksWrapper.append(backlink);
+          backlink.addEventListener('click', () => cleanupFunc());
+        } else {
+          backlinksWrapper.append(backlinkSymbol);
+          info.refs.forEach((ref, i) => {
+            const backlink = elt('a') as HTMLAnchorElement;
+            const sup = elt('sup') as HTMLElement;
+            sup.append(backlink);
+            backlinksWrapper.append(sup);
+
+            backlink.href = `#${ref.id}`;
+            backlink.textContent = getBacklinkIdentifier!(i);
+            backlink.addEventListener('click', () => cleanupFunc());
+          });
+        }
+      }
+    }
+  });
 }
