@@ -2,6 +2,7 @@ import { elt, getUniqueId, extractPadatikaName } from './utils.js';
 
 interface Options {
   locale?: string;
+  enableBacklinks?: boolean;
   backlinkPos?: 'start' | 'end';
   backlinkSymbol?: string;
   getBacklinkIdentifier?: (n: number) => string;
@@ -11,6 +12,7 @@ interface Options {
 
 const defaultOptions: Options = {
   locale: 'en-US',
+  enableBacklinks: true,
   backlinkPos: 'start',
   backlinkSymbol: '↑',
   ignoreIndicatorOfFirstCategory: true,
@@ -22,6 +24,7 @@ export default function initPadatika(
   },
   {
     locale = 'en-US',
+    enableBacklinks = true,
     backlinkPos = 'start',
     backlinkSymbol = '↑',
     getBacklinkIdentifier,
@@ -100,35 +103,37 @@ export default function initPadatika(
               refsNum: 0,
             };
 
-            if (backlinkPos == 'end') {
-              if (li.lastElementChild?.tagName == 'P') {
-                const p = li.lastElementChild as HTMLParagraphElement;
-                const node = p.nextSibling;
-                if (
-                  node?.nodeType === Node.TEXT_NODE &&
-                  (node as Text).wholeText.trim() != ''
-                ) {
+            if (enableBacklinks) {
+              if (backlinkPos == 'end') {
+                if (li.lastElementChild?.tagName == 'P') {
+                  const p = li.lastElementChild as HTMLParagraphElement;
+                  const node = p.nextSibling;
+                  if (
+                    node?.nodeType === Node.TEXT_NODE &&
+                    (node as Text).wholeText.trim() != ''
+                  ) {
+                    li.append(backlinksWrapper);
+                  } else {
+                    p.append(backlinksWrapper);
+                  }
+                } else {
                   li.append(backlinksWrapper);
-                } else {
-                  p.append(backlinksWrapper);
                 }
-              } else {
-                li.append(backlinksWrapper);
-              }
-            } else if (backlinkPos == 'start') {
-              if (li.firstElementChild?.tagName == 'P') {
-                const p = li.firstElementChild as HTMLParagraphElement;
-                const node = p.previousSibling;
-                if (
-                  node?.nodeType === Node.TEXT_NODE &&
-                  (node as Text).wholeText.trim() != ''
-                ) {
+              } else if (backlinkPos == 'start') {
+                if (li.firstElementChild?.tagName == 'P') {
+                  const p = li.firstElementChild as HTMLParagraphElement;
+                  const node = p.previousSibling;
+                  if (
+                    node?.nodeType === Node.TEXT_NODE &&
+                    (node as Text).wholeText.trim() != ''
+                  ) {
+                    li.prepend(backlinksWrapper);
+                  } else {
+                    p.prepend(backlinksWrapper);
+                  }
+                } else {
                   li.prepend(backlinksWrapper);
-                } else {
-                  p.prepend(backlinksWrapper);
                 }
-              } else {
-                li.prepend(backlinksWrapper);
               }
             }
           } else {
@@ -261,36 +266,38 @@ export default function initPadatika(
     }
   });
 
-  Object.entries(addressToInfoMap).forEach(([address, info]) => {
-    const refsCount = info.refs.length;
-    const backlinksWrapper = info.backlinksWrapper;
+  if (enableBacklinks) {
+    Object.entries(addressToInfoMap).forEach(([address, info]) => {
+      const refsCount = info.refs.length;
+      const backlinksWrapper = info.backlinksWrapper;
 
-    if (refsCount == 0) {
-      console.warn(`Footnote of address "${address}" have no references.`);
-      const ref = info.li.querySelector('[data-padatika]');
-      if (ref) {
-        console.error(
-          `References from orphan footnote(${address}) can have unexpected output!`,
-        );
-      }
-    } else if (refsCount == 1) {
-      const backlink = elt('a') as HTMLAnchorElement;
-      backlink.textContent = backlinkSymbol;
-      backlink.href = `#${info.refs[0].id}`;
-      backlinksWrapper.append(backlink);
-      backlink.addEventListener('click', () => cleanupFunc());
-    } else {
-      backlinksWrapper.append(backlinkSymbol);
-      info.refs.forEach((ref, i) => {
+      if (refsCount == 0) {
+        console.warn(`Footnote of address "${address}" have no references.`);
+        const ref = info.li.querySelector('[data-padatika]');
+        if (ref) {
+          console.error(
+            `References from orphan footnote(${address}) can have unexpected output!`,
+          );
+        }
+      } else if (refsCount == 1) {
         const backlink = elt('a') as HTMLAnchorElement;
-        const sup = elt('sup') as HTMLElement;
-        sup.append(backlink);
-        backlinksWrapper.append(sup);
-
-        backlink.href = `#${ref.id}`;
-        backlink.textContent = getBacklinkIdentifier!(i);
+        backlink.textContent = backlinkSymbol;
+        backlink.href = `#${info.refs[0].id}`;
+        backlinksWrapper.append(backlink);
         backlink.addEventListener('click', () => cleanupFunc());
-      });
-    }
-  });
+      } else {
+        backlinksWrapper.append(backlinkSymbol);
+        info.refs.forEach((ref, i) => {
+          const backlink = elt('a') as HTMLAnchorElement;
+          const sup = elt('sup') as HTMLElement;
+          sup.append(backlink);
+          backlinksWrapper.append(sup);
+
+          backlink.href = `#${ref.id}`;
+          backlink.textContent = getBacklinkIdentifier!(i);
+          backlink.addEventListener('click', () => cleanupFunc());
+        });
+      }
+    });
+  }
 }
