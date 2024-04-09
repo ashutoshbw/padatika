@@ -13,7 +13,7 @@ export function getUniqueId(startString: string) {
   return id;
 }
 
-export function extractPadatikaName(elt: Element) {
+export function extractFootnoteName(elt: Element) {
   let nonSpaceTextFound = false;
   let name = '';
   function process(elt: Element) {

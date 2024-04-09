@@ -1,4 +1,4 @@
-import { elt, getUniqueId, extractPadatikaName } from './utils.js';
+import { elt, getUniqueId, extractFootnoteName } from './utils.js';
 
 const pkgName = 'Padatika';
 
@@ -99,7 +99,7 @@ export default function initPadatika(
       ulsToRemove.push(ul);
       for (let i = 0; i < ul.children.length; i++) {
         const li = ul.children[i] as HTMLLIElement;
-        const name = extractPadatikaName(li);
+        const name = extractFootnoteName(li);
         if (name != '') {
           const address = `${categoryId}:${name}`;
           if (!addressToInfoMap[address]) {
