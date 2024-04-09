@@ -152,7 +152,10 @@ export default function initPadatika(
     }
   }
 
-  const firstCategoryId = document.querySelector(categoryIdsQueryString)?.id;
+  const firstCategoryId =
+    categoryIdsQueryString != ''
+      ? document.querySelector(categoryIdsQueryString)!.id
+      : null;
 
   lisToRemove.forEach((li) => li.remove());
 
@@ -186,6 +189,7 @@ export default function initPadatika(
       if (ignoreIndicatorOfFirstCategory && !ignoreIndicatorOfCategory) {
         if (categoryId === firstCategoryId) categoryIndicatorFormatted = '';
       } else if (ignoreIndicatorOfCategory) {
+        // note that if both options are true, this overrides ignoreIndicatorOfFirstCategory
         if (categoryId === ignoreIndicatorOfCategory)
           categoryIndicatorFormatted = '';
       }
