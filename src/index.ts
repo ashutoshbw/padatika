@@ -8,6 +8,7 @@ interface Options {
   getBacklinkIdentifier?: (n: number) => string;
   ignoreIndicatorOfFirstCategory?: boolean;
   ignoreIndicatorOfCategory?: string;
+  enableBrackets?: boolean;
 }
 
 const defaultOptions: Options = {
@@ -16,6 +17,7 @@ const defaultOptions: Options = {
   backlinkPos: 'start',
   backlinkSymbol: '↑',
   ignoreIndicatorOfFirstCategory: true,
+  enableBrackets: true,
 };
 
 export default function initPadatika(
@@ -30,6 +32,7 @@ export default function initPadatika(
     getBacklinkIdentifier,
     ignoreIndicatorOfFirstCategory = true,
     ignoreIndicatorOfCategory,
+    enableBrackets = true,
   }: Options = defaultOptions,
 ) {
   if (getBacklinkIdentifier == undefined) {
@@ -173,7 +176,7 @@ export default function initPadatika(
     const anchor = elt('a') as HTMLAnchorElement;
     const renderAnchor = (err: boolean, content: string, href?: string) => {
       sup.replaceChildren(anchor);
-      anchor.textContent = `[${content}]`;
+      anchor.textContent = enableBrackets ? `[${content}]` : content;
       if (href) anchor.href = href;
       if (err) anchor.style.color = 'red';
     };
