@@ -26,7 +26,7 @@ export function extractPadatikaName(elt: Element) {
         const text = (node as Text).data.trim();
         if (text.length != 0) {
           nonSpaceTextFound = true;
-          const nameRegex = /^\[([\w-]+)\]\s*?/;
+          const nameRegex = /^\[([\w-]+)\]\s*/;
           const match = text.match(nameRegex);
           if (match) {
             name = match[1];
