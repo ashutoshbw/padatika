@@ -1,5 +1,7 @@
 import { elt, getUniqueId, extractPadatikaName } from './utils.js';
 
+const pkgName = 'Padatika';
+
 interface Options {
   locale?: string;
   enableBacklinks?: boolean;
@@ -150,13 +152,13 @@ export default function initPadatika(
             }
           } else {
             console.warn(
-              `Footnote ignored for duplicate name(${name}) in same category(${categoryId}).`,
+              `${pkgName}: Footnote ignored for duplicate name(${name}) in category(${categoryId}).`,
             );
             lisToRemove.push(li); // for not collect sups from here
           }
         } else {
           console.warn(
-            `Footnote lacks a name or has invalid one: ${li.textContent}`,
+            `${pkgName}: Footnote lacks a name or has invalid one: ${li.textContent}`,
           );
           lisToRemove.push(li); // for not collect sups from here
         }
@@ -288,11 +290,11 @@ export default function initPadatika(
     const backlinksWrapper = info.backlinksWrapper;
 
     if (refsCount == 0) {
-      console.warn(`Footnote of address "${address}" have no references.`);
+      console.warn(`${pkgName}: Footnote("${address}") lacks references.`);
       const ref = info.li.querySelector('[data-padatika]');
       if (ref) {
         console.error(
-          `References from orphan footnote(${address}) can have unexpected output!`,
+          `${pkgName}: Reference from orphan footnote(${address}) exists!`,
         );
       }
     } else {
