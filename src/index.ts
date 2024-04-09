@@ -10,6 +10,7 @@ interface Options {
   ignoreIndicatorOfCategory?: string;
   enableBrackets?: boolean;
   sep?: string;
+  targetedBacklinkClassName?: string;
 }
 
 const defaultOptions: Options = {
@@ -20,6 +21,7 @@ const defaultOptions: Options = {
   ignoreIndicatorOfFirstCategory: true,
   enableBrackets: true,
   sep: '&nbsp;',
+  targetedBacklinkClassName: 'targeted-backlink',
 };
 
 export default function initPadatika(
@@ -36,6 +38,7 @@ export default function initPadatika(
     ignoreIndicatorOfCategory,
     enableBrackets = true,
     sep = '&nbsp;',
+    targetedBacklinkClassName = 'targeted-backlink',
   }: Options = defaultOptions,
 ) {
   if (getBacklinkIdentifier == undefined) {
@@ -214,7 +217,6 @@ export default function initPadatika(
                 backlinksWrapper.querySelector<HTMLAnchorElement>(
                   `[href="#${anchor.id}"]`,
                 )!;
-              const targetedBacklinkClassName = 'padatika-targeted-backlink';
 
               cleanupFunc = () => {
                 if (cleanupNeeded) {
