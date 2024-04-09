@@ -9,6 +9,7 @@ interface Options {
   ignoreIndicatorOfFirstCategory?: boolean;
   ignoreIndicatorOfCategory?: string;
   enableBrackets?: boolean;
+  sep?: string;
 }
 
 const defaultOptions: Options = {
@@ -18,6 +19,7 @@ const defaultOptions: Options = {
   backlinkSymbol: '↑',
   ignoreIndicatorOfFirstCategory: true,
   enableBrackets: true,
+  sep: '&nbsp;',
 };
 
 export default function initPadatika(
@@ -33,6 +35,7 @@ export default function initPadatika(
     ignoreIndicatorOfFirstCategory = true,
     ignoreIndicatorOfCategory,
     enableBrackets = true,
+    sep = '&nbsp;',
   }: Options = defaultOptions,
 ) {
   if (getBacklinkIdentifier == undefined) {
@@ -174,9 +177,9 @@ export default function initPadatika(
     const match = (sup.textContent as string).trim().match(regex);
 
     const anchor = elt('a') as HTMLAnchorElement;
-    const renderAnchor = (err: boolean, content: string, href?: string) => {
+    const renderAnchor = (err: boolean, innerHTML: string, href?: string) => {
       sup.replaceChildren(anchor);
-      anchor.textContent = enableBrackets ? `[${content}]` : content;
+      anchor.innerHTML = enableBrackets ? `[${innerHTML}]` : innerHTML;
       if (href) anchor.href = href;
       if (err) anchor.style.color = 'red';
     };
@@ -187,7 +190,7 @@ export default function initPadatika(
 
       const heading = categoryIdToHeadingMap[categoryId];
       const categoryIndicator = categoryIdToCategoryIndicatorMap[categoryId];
-      let categoryIndicatorFormatted = categoryIndicator + ' ';
+      let categoryIndicatorFormatted = categoryIndicator + sep;
 
       if (ignoreIndicatorOfFirstCategory && !ignoreIndicatorOfCategory) {
         if (categoryId === firstCategoryId) categoryIndicatorFormatted = '';
