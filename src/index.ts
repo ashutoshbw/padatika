@@ -11,6 +11,7 @@ interface Options {
   enableBrackets?: boolean;
   sep?: string;
   targetedBacklinkClassName?: string;
+  backlinksWrapperClassName?: string;
 }
 
 const defaultOptions: Options = {
@@ -22,6 +23,7 @@ const defaultOptions: Options = {
   enableBrackets: true,
   sep: '&nbsp;',
   targetedBacklinkClassName: 'targeted-backlink',
+  backlinksWrapperClassName: 'backlinks-wrapper',
 };
 
 export default function initPadatika(
@@ -39,6 +41,7 @@ export default function initPadatika(
     enableBrackets = true,
     sep = '&nbsp;',
     targetedBacklinkClassName = 'targeted-backlink',
+    backlinksWrapperClassName = 'backlinks-wrapper',
   }: Options = defaultOptions,
 ) {
   if (getBacklinkIdentifier == undefined) {
@@ -100,7 +103,7 @@ export default function initPadatika(
           if (!addressToInfoMap[address]) {
             const backlinksWrapper = elt(
               'span',
-              'backlink-wrapper',
+              backlinksWrapperClassName,
             ) as HTMLSpanElement;
 
             li.id = getUniqueId(`padatika-${address}`);
