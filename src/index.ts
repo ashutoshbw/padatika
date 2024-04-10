@@ -1,4 +1,9 @@
-import { elt, getUniqueId, extractFootnoteName } from './utils.js';
+import {
+  elt,
+  getUniqueId,
+  extractFootnoteName,
+  numberInLocale,
+} from './utils.js';
 
 const pkgName = 'Padatika';
 
@@ -8,6 +13,7 @@ interface Options {
   backlinkPos?: 'start' | 'end';
   backlinkSymbol?: string;
   getBacklinkIdentifier?: (n: number) => string;
+  getListStyleTypeStr?: (n: string) => string;
   ignoreIndicatorOfFirstCategory?: boolean;
   ignoreIndicatorOfCategory?: string;
   enableBrackets?: boolean;
@@ -38,6 +44,7 @@ export default function initPadatika(
     backlinkPos = 'start',
     backlinkSymbol = '↑',
     getBacklinkIdentifier,
+    getListStyleTypeStr,
     ignoreIndicatorOfFirstCategory = true,
     ignoreIndicatorOfCategory,
     enableBrackets = true,
@@ -46,9 +53,15 @@ export default function initPadatika(
     backlinksWrapperClassName = 'backlinks-wrapper',
   }: Options = defaultOptions,
 ) {
-  if (getBacklinkIdentifier == undefined) {
+  if (getBacklinkIdentifier === undefined) {
     getBacklinkIdentifier = (n: number) => {
-      return (n + 1).toLocaleString(locale, { useGrouping: false });
+      return numberInLocale(n + 1, locale);
+    };
+  }
+
+  if (getListStyleTypeStr === undefined) {
+    getListStyleTypeStr = (n: string) => {
+      return `${n}. `;
     };
   }
 
@@ -59,7 +72,7 @@ export default function initPadatika(
       li: HTMLLIElement;
       backlinksWrapper: HTMLSpanElement;
       refs: HTMLAnchorElement[]; // It is important backlinks and handling uniqueRefCount
-      refsNum: number;
+      indexLocaleStr: string;
     };
   } = {};
 
@@ -114,7 +127,7 @@ export default function initPadatika(
               li,
               backlinksWrapper: backlinksWrapper,
               refs: [],
-              refsNum: 0,
+              indexLocaleStr: '',
             };
 
             if (enableBacklinks) {
@@ -250,26 +263,33 @@ export default function initPadatika(
             if (addressInfo.refs.length === 1) {
               // i.e. if number of backlinks is 1
               const info = categoryIdToRefInfo[categoryId];
-              info.parentOL.append(li);
               info.uniqueRefCount++;
-              addressInfo.refsNum = info.uniqueRefCount;
+              addressInfo.indexLocaleStr = numberInLocale(
+                info.uniqueRefCount,
+                locale,
+              );
+              li.style.listStyleType = `"${getListStyleTypeStr(
+                addressInfo.indexLocaleStr,
+              )}"`;
+              info.parentOL.append(li);
             }
             renderAnchor(
               false,
-              `${categoryIndicatorFormatted}${addressInfo.refsNum}`,
+              `${categoryIndicatorFormatted}${addressInfo.indexLocaleStr}`,
               `#${li.id}`,
             );
           } else {
+            addressInfo.indexLocaleStr = numberInLocale(1, locale);
             const ol = elt('ol') as HTMLOListElement;
+            li.style.listStyleType = `"${getListStyleTypeStr(addressInfo.indexLocaleStr)}"`;
             ol.append(li);
             categoryIdToRefInfo[categoryId] = {
               uniqueRefCount: 1,
               parentOL: ol,
             };
-            addressInfo.refsNum = 1;
             renderAnchor(
               false,
-              `${categoryIndicatorFormatted}${1}`,
+              `${categoryIndicatorFormatted}${addressInfo.indexLocaleStr}`,
               `#${li.id}`,
             );
             heading.insertAdjacentElement('afterend', ol);

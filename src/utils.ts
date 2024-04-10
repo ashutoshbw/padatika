@@ -13,6 +13,10 @@ export function getUniqueId(startString: string) {
   return id;
 }
 
+export function numberInLocale(n: number, locale: string): string {
+  return n.toLocaleString(locale, { useGrouping: false });
+}
+
 export function extractFootnoteName(elt: Element) {
   let nonSpaceTextFound = false;
   let name = '';
