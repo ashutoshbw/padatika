@@ -9,6 +9,7 @@ const pkgName = 'Padatika';
 
 interface Options {
   locale?: string;
+  dataAttributePostfix?: string;
   enableBacklinks?: boolean;
   backlinkPos?: 'start' | 'end';
   backlinkSymbol?: string;
@@ -24,6 +25,7 @@ interface Options {
 
 const defaultOptions: Options = {
   locale: 'en-US',
+  dataAttributePostfix: 'fnref',
   enableBacklinks: true,
   backlinkPos: 'start',
   backlinkSymbol: '↑',
@@ -40,6 +42,7 @@ export default function initPadatika(
   },
   {
     locale = 'en-US',
+    dataAttributePostfix = 'fnref',
     enableBacklinks = true,
     backlinkPos = 'start',
     backlinkSymbol = '↑',
@@ -121,7 +124,7 @@ export default function initPadatika(
               backlinksWrapperClassName,
             ) as HTMLSpanElement;
 
-            li.id = getUniqueId(`padatika-${address}`);
+            li.id = getUniqueId(`fn-${address}`);
 
             addressToInfoMap[address] = {
               li,
@@ -187,7 +190,7 @@ export default function initPadatika(
   lisToRemove.forEach((li) => li.remove());
 
   const sups = [
-    ...document.querySelectorAll('[data-padatika]'),
+    ...document.querySelectorAll(`[data-${dataAttributePostfix}]`),
   ] as HTMLElement[];
   if (sups.length == 0) return;
 
@@ -311,7 +314,7 @@ export default function initPadatika(
 
     if (refsCount == 0) {
       console.warn(`${pkgName}: Footnote("${address}") lacks references.`);
-      const ref = info.li.querySelector('[data-padatika]');
+      const ref = info.li.querySelector(`[data-${dataAttributePostfix}]`);
       if (ref) {
         console.error(
           `${pkgName}: Reference from orphan footnote(${address}) exists!`,
