@@ -13,8 +13,15 @@ export function getUniqueId(startString: string) {
   return id;
 }
 
-export function numberInLocale(n: number, locale: string): string {
-  return n.toLocaleString(locale, { useGrouping: false });
+export function formatNumber(
+  n: number,
+  format: string | ((n: number) => string),
+): string {
+  if (typeof format == 'string') {
+    return n.toLocaleString(`en-u-nu-${format}`, { useGrouping: false });
+  } else {
+    return format(n);
+  }
 }
 
 export function extractFootnoteName(elt: Element) {

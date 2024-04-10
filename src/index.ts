@@ -2,13 +2,13 @@ import {
   elt,
   getUniqueId,
   extractFootnoteName,
-  numberInLocale,
+  formatNumber,
 } from './utils.js';
 
 const pkgName = 'Padatika';
 
 interface Options {
-  locale?: string;
+  numberFormat?: string | ((n: number) => string);
   dataAttributePostfix?: string;
   enableBacklinks?: boolean;
   backlinkPos?: 'start' | 'end';
@@ -24,7 +24,7 @@ interface Options {
 }
 
 const defaultOptions: Options = {
-  locale: 'en-US',
+  numberFormat: 'latn',
   dataAttributePostfix: 'fnref',
   enableBacklinks: true,
   backlinkPos: 'start',
@@ -41,7 +41,7 @@ export default function initPadatika(
     [x: string]: string;
   },
   {
-    locale = 'en-US',
+    numberFormat = 'latn',
     dataAttributePostfix = 'fnref',
     enableBacklinks = true,
     backlinkPos = 'start',
@@ -58,7 +58,7 @@ export default function initPadatika(
 ) {
   if (getBacklinkIdentifier === undefined) {
     getBacklinkIdentifier = (n: number) => {
-      return numberInLocale(n + 1, locale);
+      return formatNumber(n + 1, numberFormat);
     };
   }
 
@@ -267,9 +267,9 @@ export default function initPadatika(
               // i.e. if number of backlinks is 1
               const info = categoryIdToRefInfo[categoryId];
               info.uniqueRefCount++;
-              addressInfo.indexLocaleStr = numberInLocale(
+              addressInfo.indexLocaleStr = formatNumber(
                 info.uniqueRefCount,
-                locale,
+                numberFormat,
               );
               li.style.listStyleType = `"${getListStyleTypeStr(
                 addressInfo.indexLocaleStr,
@@ -282,7 +282,7 @@ export default function initPadatika(
               `#${li.id}`,
             );
           } else {
-            addressInfo.indexLocaleStr = numberInLocale(1, locale);
+            addressInfo.indexLocaleStr = formatNumber(1, numberFormat);
             const ol = elt('ol') as HTMLOListElement;
             li.style.listStyleType = `"${getListStyleTypeStr(addressInfo.indexLocaleStr)}"`;
             ol.append(li);
