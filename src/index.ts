@@ -262,6 +262,8 @@ export default function initPadatika(
             }
           });
 
+          sup.insertAdjacentHTML("beforebegin", "&NoBreak;");
+
           if (categoryIdToRefInfo[categoryId]) {
             if (addressInfo.refs.length === 1) {
               // i.e. if number of backlinks is 1
