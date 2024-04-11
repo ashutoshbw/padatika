@@ -7,12 +7,23 @@ import {
 
 const pkgName = 'Padatika';
 
+const defaultJumpTexts = {
+  jumpUp: 'Jump up',
+  jumpBackUp: 'Jump back up',
+  jumpUpTo: 'Jump up to: ',
+};
+
 interface Options {
   numberFormat?: string | ((n: number) => string);
   dataAttributePostfix?: string;
   enableBacklinks?: boolean;
   backlinkPos?: 'start' | 'end';
   backlinkSymbol?: string;
+  jumpTexts?: {
+    jumpUp?: string;
+    jumpBackUp?: string;
+    jumpUpTo?: string;
+  };
   getBacklinkIdentifier?: (n: number) => string;
   getListStyleTypeStr?: (n: string) => string;
   ignoreIndicatorOfFirstCategory?: boolean;
@@ -29,6 +40,7 @@ const defaultOptions: Options = {
   enableBacklinks: true,
   backlinkPos: 'start',
   backlinkSymbol: '↑',
+  jumpTexts: defaultJumpTexts,
   ignoreIndicatorOfFirstCategory: true,
   enableBrackets: true,
   sep: '&nbsp;',
@@ -46,6 +58,7 @@ export default function initPadatika(
     enableBacklinks = true,
     backlinkPos = 'start',
     backlinkSymbol = '↑',
+    jumpTexts = defaultJumpTexts,
     getBacklinkIdentifier,
     getListStyleTypeStr,
     ignoreIndicatorOfFirstCategory = true,
@@ -68,7 +81,7 @@ export default function initPadatika(
     };
   }
 
-  // TODO: Validate idToInitialMap
+  jumpTexts = { ...defaultJumpTexts, ...jumpTexts };
 
   const addressToInfoMap: {
     [x: string]: {
@@ -164,6 +177,7 @@ export default function initPadatika(
                 } else {
                   li.prepend(backlinksWrapper);
                 }
+                backlinksWrapper.insertAdjacentText('afterend', ' ');
               }
             }
           } else {
@@ -232,13 +246,13 @@ export default function initPadatika(
           anchor.id = getUniqueId(`${li.id}-ref-${addressInfo.refs.length}`);
           anchor.addEventListener('click', () => {
             cleanupFunc();
-            if (addressInfo.refs.length > 1) {
-              const backlinksWrapper = addressInfo.backlinksWrapper;
-              const targetedBacklink =
-                backlinksWrapper.querySelector<HTMLAnchorElement>(
-                  `[href="#${anchor.id}"]`,
-                )!;
+            const backlinksWrapper = addressInfo.backlinksWrapper;
+            const targetedBacklink =
+              backlinksWrapper.querySelector<HTMLAnchorElement>(
+                `[href="#${anchor.id}"]`,
+              )!;
 
+            if (addressInfo.refs.length > 1) {
               cleanupFunc = () => {
                 if (cleanupNeeded) {
                   targetedBacklink.classList.remove(targetedBacklinkClassName);
@@ -252,17 +266,28 @@ export default function initPadatika(
               const backlink = elt('a') as HTMLAnchorElement;
               backlink.textContent = backlinkSymbol;
               backlink.href = targetedBacklink.href;
+              backlink.title = jumpTexts.jumpBackUp!;
+              backlink.ariaLabel = jumpTexts.jumpBackUp!;
               backlink.addEventListener('click', cleanupFunc);
 
               const backlinkSymbolTextNode =
                 backlinksWrapper.firstChild! as Text;
               backlinkSymbolTextNode.replaceWith(backlink);
-
-              cleanupNeeded = true;
+            } else {
+              targetedBacklink.title = jumpTexts.jumpBackUp!;
+              targetedBacklink.ariaLabel = jumpTexts.jumpBackUp!;
+              cleanupFunc = () => {
+                if (cleanupNeeded) {
+                  targetedBacklink.title = jumpTexts.jumpUp!;
+                  targetedBacklink.ariaLabel = jumpTexts.jumpUp!;
+                  cleanupNeeded = false;
+                }
+              };
             }
+            cleanupNeeded = true;
           });
 
-          sup.insertAdjacentHTML("beforebegin", "&NoBreak;");
+          sup.insertAdjacentHTML('beforebegin', '&NoBreak;');
 
           if (categoryIdToRefInfo[categoryId]) {
             if (addressInfo.refs.length === 1) {
@@ -328,6 +353,8 @@ export default function initPadatika(
           const backlink = elt('a') as HTMLAnchorElement;
           backlink.textContent = backlinkSymbol;
           backlink.href = `#${info.refs[0].id}`;
+          backlink.title = jumpTexts.jumpUp!;
+          backlink.ariaLabel = jumpTexts.jumpUp!;
           backlinksWrapper.append(backlink);
           backlink.addEventListener('click', () => cleanupFunc());
         } else {
@@ -341,6 +368,16 @@ export default function initPadatika(
             backlink.href = `#${ref.id}`;
             backlink.textContent = getBacklinkIdentifier!(i);
             backlink.addEventListener('click', () => cleanupFunc());
+
+            if (i == 0) {
+              const accessibilityLabelElt = elt('span');
+              accessibilityLabelElt.textContent = jumpTexts.jumpUpTo!;
+              accessibilityLabelElt.setAttribute(
+                'style',
+                `top: -99999px; clip: rect(1px,1px,1px,1px); position: absolute !important; padding: 0 !important; border: 0 !important; height: 1px !important; width: 1px !important; overflow: hidden;`,
+              );
+              backlink.prepend(accessibilityLabelElt);
+            }
           });
         }
       }
