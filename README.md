@@ -1,28 +1,16 @@
+[![](https://data.jsdelivr.com/v1/package/npm/padatika/badge)](https://www.jsdelivr.com/package/npm/padatika)
+
 # Padatika
 
 Padatika helps you to have wikipedia like footnote system in your own website easily.
 
-Caution: This tool is not yet stable, so DO NOT use it in production.
-
 ## Installation
 
-Add the following script element in the `<head>` of your HTML:
-
-```html
-<script type="importmap">
-  {
-    "imports": {
-      "padatika": "https://esm.sh/padatika"
-    }
-  }
-</script>
-```
-
-Now you can use it your script in the ESM way:
+Padatia is ESM-only. You can import it like below:
 
 ```html
 <script type="module">
-  import initPadatika from 'padatika';
+  import initPadatika from 'https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js';
 </script>
 ```
 
