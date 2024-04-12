@@ -1,9 +1,10 @@
 {
   "name": "padatika",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A customizable footnote system inspired by wikipedia.",
   "type": "module",
   "types": "./dist/index.d.ts",
+  "browser": "./dist/index.js",
   "exports": {
     ".": {
       "import": {
@@ -13,7 +14,7 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format esm --minify --sourcemap --dts",
+    "build": "tsup src/index.ts --clean --format esm --minify --sourcemap --dts",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "check-format": "prettier . --check",
