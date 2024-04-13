@@ -4,15 +4,15 @@
 
 Got frustrated with managing footnotes manually? Padatika can help.
 
-## ✨ Features
+## 🦄 Features
 
-1. ✅ Sorts footnotes automatically.
-2. ✅ No need to manually number your references.
-3. ✅ You can easily organize your footnotes into different categories.
-4. ✅ Wikipedia-like backlinks.
-5. ✅ Localization.
-6. ✅ Super customizable with over a dozen options.
-7. ✅ Accessibility.
+- ✨ Sorts footnotes automatically.
+- 🔢 No need to manually number your references.
+- 📂 You can easily organize your footnotes into different categories.
+- ⤴️ Wikipedia-like backlinks.
+- 🌍 Localization.
+- ♿ Accessibility.
+- 🛠️ Super customizable with over a dozen options.
 
 ## Installation
 
