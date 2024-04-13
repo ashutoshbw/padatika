@@ -74,18 +74,14 @@ padatika(categoryIdToCategoryIndicatorMap);
 padatika(categoryIdToCategoryIndicatorMap, options);
 ```
 
-### `categoryIdToCategoryIndicatorMap`
+### `categoryIdToCategoryIndicatorMap`(required)
 
-We have already seen how this object looks like and an example with one category in the [Getting started](#-getting-started) section. If you haven't read that section, go and read it first.
+We have already seen how this object looks like and an example with one category in the [Getting started](#-getting-started) section. If you haven't read that section, read it first. Assuming you have read it, here goes a little involved example:
 
-Let's see an example with two categories.
+<img src="./example-with-two-categories.png">
 
-<table>
-<thead><tr>
-  <th align="left">Code</th>
-  <th align="left">Rendered Result</th>
-</tr></thead>
-<tbody><tr valign="top"><td>
+<details>
+  <summary>Can you guess the code? Click to reveal it.</summary>
 
 ```html
 <script type="module">
@@ -111,9 +107,137 @@ I smell something.<sup data-fnref>refs:something</sup>
   <li>[something] dog 💩</li>
 </ul>
 ```
+  
+</details>
 
-</td><td>
+### `options`(optional)
 
-![A simple footnote example with two categories](./example-with-two-categories.png)
+Here you can pass a optional object specifying options to configure padatika. The available options are:
 
-</td></tbody></table>
+- `numberFormat`
+- `dataAttributePostfix`
+- `enableBacklinks`
+- `backlinkPos`
+- `backlinkSymbol`
+- `jumpTexts`
+- `getBacklinkIdentifier`
+- `getListStyleTypeStr`
+- `ignoreIndicatorOfFirstCategory`
+- `ignoreIndicatorOfCategory`
+- `enableBrackets`
+- `sep`
+- `targetedBacklinkClassName`
+- `backlinksWrapperClassName`
+
+Head over to [All option](#%EF%B8%8F-all-options) section to read their purpose and possible values.
+
+## 🛠️ All options
+
+### `numberFormat`
+
+If your writing is in a non-English language, you can use this option to easily change the language/format of numbers in reference supscripts and footnotes.
+
+For your convenience the following table describes all formats:
+
+Format | Description
+--- | ---
+adlm | Adlam digits
+ahom | Ahom digits
+arab | Arabic-Indic digits
+arabext | Extended Arabic-Indic digits
+armn | Armenian upper case numerals — algorithmic
+armnlow | Armenian lower case numerals — algorithmic
+bali | Balinese digits
+beng | Bengali digits
+bhks | Bhaiksuki digits
+brah | Brahmi digits
+cakm | Chakma digits
+cham | Cham digits
+cyrl | Cyrillic numerals — algorithmic
+deva | Devanagari digits
+diak | Dives Akuru digits
+ethi | Ethiopic numerals — algorithmic
+finance | Financial numerals — may be algorithmic
+fullwide | Full width digits
+geor | Georgian numerals — algorithmic
+gong | Gunjala Gondi digits
+gonm | Masaram Gondi digits
+grek | Greek upper case numerals — algorithmic
+greklow | Greek lower case numerals — algorithmic
+gujr | Gujarati digits
+guru | Gurmukhi digits
+hanidays | Han-character day-of-month numbering for lunar/other traditional calendars
+hanidec | Positional decimal system using Chinese number ideographs as digits
+hans | Simplified Chinese numerals — algorithmic
+hansfin | Simplified Chinese financial numerals — algorithmic
+hant | Traditional Chinese numerals — algorithmic
+hantfin | Traditional Chinese financial numerals — algorithmic
+hebr | Hebrew numerals — algorithmic
+hmng | Pahawh Hmong digits
+hmnp | Nyiakeng Puachue Hmong digits
+java | Javanese digits
+jpan | Japanese numerals — algorithmic
+jpanfin | Japanese financial numerals — algorithmic
+jpanyear | Japanese first-year Gannen numbering for Japanese calendar
+kali | Kayah Li digits
+kawi | Kawi digits
+khmr | Khmer digits
+knda | Kannada digits
+lana | Tai Tham Hora (secular) digits
+lanatham | Tai Tham Tham (ecclesiastical) digits
+laoo | Lao digits
+latn | Latin digits
+lepc | Lepcha digits
+limb | Limbu digits
+mathbold | Mathematical bold digits
+mathdbl | Mathematical double-struck digits
+mathmono | Mathematical monospace digits
+mathsanb | Mathematical sans-serif bold digits
+mathsans | Mathematical sans-serif digits
+mlym | Malayalam digits
+modi | Modi digits
+mong | Mongolian digits
+mroo | Mro digits
+mtei | Meetei Mayek digits
+mymr | Myanmar digits
+mymrshan | Myanmar Shan digits
+mymrtlng | Myanmar Tai Laing digits
+nagm | Nag Mundari digits
+native | Native digits
+newa | Newa digits
+nkoo | N'Ko digits
+olck | Ol Chiki digits
+orya | Oriya digits
+osma | Osmanya digits
+rohg | Hanifi Rohingya digits
+roman | Roman upper case numerals — algorithmic
+romanlow | Roman lowercase numerals — algorithmic
+saur | Saurashtra digits
+segment | Legacy computing segmented digits
+shrd | Sharada digits
+sind | Khudawadi digits
+sinh | Sinhala Lith digits
+sora | Sora_Sompeng digits
+sund | Sundanese digits
+takr | Takri digits
+talu | New Tai Lue digits
+taml | Tamil numerals — algorithmic
+tamldec | Modern Tamil decimal digits
+tnsa | Tangsa digits
+telu | Telugu digits
+thai | Thai digits
+tirh | Tirhuta digits
+tibt | Tibetan digits
+traditio | Traditional numerals — may be algorithmic
+vaii | Vai digits
+wara | Warang Citi digits
+wcho | Wancho digits
+
+
+See the [Unicode CLDR Project's `numbers.xml`](https://github.com/unicode-org/cldr/blob/main/common/bcp47/number.xml) file for up to date list of them.
+
+
+
+
+
+
