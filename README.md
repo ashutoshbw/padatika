@@ -48,15 +48,19 @@ Now load the page in your browser with a local web server. You should see someth
 
 Here, as you can see padatika, automatically numbers for your footnotes. and add backlinks at the start of footnotes.
 
-You've probably guessed how the linking is happening between footnotes and its references. Let's be clear about it and a few other things here so you can understand the rest of the doc with clarity:
+You've probably guessed how the linking is happening between footnotes and its references. Let's be clear about it and a few other things now so you can understand the rest of the doc easily:
 
-- First, footnotes in padatika are organized by categories. A category is just a part of document starting with a heading an id hoding the category name. In most case you will need just one or two categories, but you can have as many categories as you like in a similar fashion. You tell padatika to look for category by passing its name as a property key of the object that you pass to `padatika`.
-- Below this heading, you have to write your footnotes in `<li>` elements wrapped in an unordered list(`<ul>`). Padatika will convert it to an order list and sort your footnotes the match reference order.
-- Each footnote must start with a **name** wrapped with square brackets(`[]`) that is unique in this category. A name can be composed of a combination lowercase or uppercase English alphabets, numbers, dash(`-`) and underscore(`_`).
-- To create a reference you have to use the following template: `<sup data-fnref>category_name:footnote_name</sup>`. For example, `<sup data-fnref>notes:cats</sup>` means, it links to footnote of name `cats` under the `notes` category. Here `data-fnref` empty data attribute is used by padaika by default to collect the references for processing.
-- One thing I'm almost sure you are feeling curious is about the `'N'` value given to the `notes` key in object passed to `padatika` call. It's a footnote category indicator that you may want to see in your rendered references. In the example above it has no effect because by default Padatika doesn't show any category indicator for the first category appearing in the document. However it will appear if there is another category that comes before the notes. You can also set the option `ignoreIndicatorOfFirstCategory` to `false` to make sure all category indicators appear. Options are set by passing another object to `padatika`. So the call will look like below:
+- First, footnotes in padatika are organized by categories. A category is just a part of document starting with a heading element with an id containing the category name. In most case you will need just one or two categories, but you can have as many categories as you like in a similar fashion. You tell padatika to look for a category by passing its name as a key of a property of the object that you pass to `padatika`. We will see the role of the value of this property in a minute. First let's cover few other things.
+- Below the category heading, you have to write your footnotes in `<li>` elements wrapped in an unordered list(`<ul>`). Padatika will convert it to an ordered list and sort your footnotes to match references order.
+- Each footnote must start with a **name** wrapped with square brackets(`[]`) that is unique within the corresponding category. A name can be composed of a combination lowercase or uppercase English alphabets, numbers, dash(`-`) and underscore(`_`).
+- To create a reference you have to use the following template: `<sup data-fnref>category_name:footnote_name</sup>`. For example, `<sup data-fnref>notes:cats</sup>` means, it links to a footnote of name `cats` under the `notes` category. Here `data-fnref` empty data attribute is used by padaika by default to collect the references for processing.
+- Now let's talk about the `'N'` value given to the `notes` key in object passed to `padatika` call. It's a footnote category indicator that you may want to see in your rendered references. In the example above it has no effect because by default Padatika doesn't show the category indicator for the first category that appears in the document. However it will appear if there is another category that comes before the "notes" category. You can also set the option `ignoreIndicatorOfFirstCategory` to `false` to make sure all category indicators appear. Options are set by passing another object to `padatika`. So the call to `padatika` in this case will look like below:
+ 
   ```js
   padatika({ notes: 'N' }, { ignoreIndicatorOfFirstCategory: false });
   ```
-  The result will look like below:
+  
+  Result:
+  
   ![A simple footnote example with Padatika](./example-with-category-indicator.png)
+
