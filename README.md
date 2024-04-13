@@ -1,8 +1,18 @@
 [![](https://data.jsdelivr.com/v1/package/npm/padatika/badge)](https://www.jsdelivr.com/package/npm/padatika)
 
-# Padatika
+# 📝 Padatika
 
-Padatika helps you to have wikipedia like footnote system in your own website easily.
+Got frustrated with managing footnotes manually? Padatika can help.
+
+## ✨ Features
+
+1. ✅ Sorts footnotes automatically.
+2. ✅ No need to manually number your references.
+3. ✅ You can easily organize your footnotes into different categories.
+4. ✅ Wikipedia-like backlinks.
+5. ✅ Localization.
+6. ✅ Super customizable with over a dozen options.
+7. ✅ Accessibility.
 
 ## Installation
 
