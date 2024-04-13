@@ -58,20 +58,20 @@ You've probably guessed how the linking is happening between footnotes and its r
 - Each footnote must start with a **name** wrapped with square brackets(`[]`) that is unique within the corresponding category. A name can be composed of a combination lowercase or uppercase English alphabets, numbers, dash(`-`) and underscore(`_`).
 - To create a reference you have to use the following template: `<sup data-fnref>category_name:footnote_name</sup>`. For example, `<sup data-fnref>notes:cats</sup>` means, it links to a footnote of name `cats` under the `notes` category. Here `data-fnref` empty data attribute is used by padaika by default to collect the references for processing.
 - Now let's talk about the `'N'` value given to the `notes` key in the object passed to `padatika` call. It's a footnote category indicator that you may want to see in your rendered references. In the example above it has no effect because by default Padatika doesn't show the category indicator for the first category that appears in the document. However it will appear if there is another category that comes before the "notes" category. You can also set the option `ignoreIndicatorOfFirstCategory` to `false` to make sure all category indicators appear. Options are set by passing another object to `padatika`. So the call to `padatika` in this case will look like below:
- 
+
   ```js
   padatika({ notes: 'N' }, { ignoreIndicatorOfFirstCategory: false });
   ```
-  
+
   Result:
-  
+
   ![A simple footnote example with Padatika](./example-with-category-indicator.png)
 
 ## 🧩 Syntax of `padatika`
 
 ```js
-padatika(categoryIdToCategoryIndicatorMap)
-padatika(categoryIdToCategoryIndicatorMap, options)
+padatika(categoryIdToCategoryIndicatorMap);
+padatika(categoryIdToCategoryIndicatorMap, options);
 ```
 
 ### `categoryIdToCategoryIndicatorMap`
@@ -114,6 +114,6 @@ I smell something.<sup data-fnref>refs:something</sup>
 
 </td><td>
 
-Image
+![A simple footnote example with two categories](./example-with-two-categories.png)
 
 </td></tbody></table>
