@@ -14,15 +14,37 @@ Got frustrated with managing footnotes manually? Padatika can help.
 - ♿ Accessibility.
 - 🛠️ Super customizable with over a dozen options.
 
-## Installation
+## 🚀 Getting started
 
-Padatia is ESM-only. You can import it like below:
+Let's see an example to get familier with Padatika quickly.
+
+First, load Padatika and initialize it like below:
 
 ```html
 <script type="module">
-  import initPadatika from 'https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js';
+  import padatika from 'https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js';
+
+  padatika({ notes: 'N' });
 </script>
 ```
+
+Now in the `<body>` of your HTML, paste the following:
+
+```html
+I like cats.<sup data-fnref>notes:cats</sup>
+
+I like dogs.<sup data-fnref>notes:dogs</sup>
+
+<h2 id="notes">Notes</h2>
+<ul>
+  <li>[cats] meow meow</li>
+  <li>[dogs] woof woof</li>
+</ul>
+```
+
+Now load the page in your browser with a local web server. You should see something like this:
+
+![A simple footnote example with Padatika](./example-1.png)
 
 ## Concepts
 
