@@ -135,9 +135,12 @@ Head over to [All option](#%EF%B8%8F-all-options) section to read their purpose 
 
 ### `numberFormat`
 
-If your writing is in a non-English language, you can use this option to easily change the language/format of numbers in reference supscripts and footnotes.
+You can use this option to easily change the language/format of numbers in reference supscripts and footnotes.
 
 For your convenience the following table describes all formats:
+
+<details>
+  <summary>Click to expand table</summary>
 
 Format | Description
 --- | ---
@@ -232,10 +235,12 @@ traditio | Traditional numerals — may be algorithmic
 vaii | Vai digits
 wara | Warang Citi digits
 wcho | Wancho digits
-
+  
+</details>
 
 See the [Unicode CLDR Project's `numbers.xml`](https://github.com/unicode-org/cldr/blob/main/common/bcp47/number.xml) file for up to date list of them.
 
+If some of the these format doesn't have implementation or you need to format/translate it in a different way, you can also pass a function to this option. This function takes in a javascript number and and should return a string of the formatted/translated number in your desired way.
 
 
 
