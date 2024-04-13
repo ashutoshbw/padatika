@@ -46,10 +46,7 @@ Now load the page in your browser with a local web server. You should see someth
 
 ![A simple footnote example with Padatika](./example-1.png)
 
-Here, as you can see padatika,
-
-- automatically numbers for your footnotes.
-- and add backlinks at the start of footnotes.
+Here, as you can see padatika, automatically numbers for your footnotes. and add backlinks at the start of footnotes.
 
 You've probably guessed how the linking is happening between footnotes and its references. Let's be clear about it and a few other things here so you can understand the rest of the doc with clarity:
 
@@ -61,3 +58,5 @@ You've probably guessed how the linking is happening between footnotes and its r
   ```js
   padatika({ notes: 'N' }, { ignoreIndicatorOfFirstCategory: false });
   ```
+  The result will look like below:
+  ![A simple footnote example with Padatika](./example-with-category-indicator.png)
