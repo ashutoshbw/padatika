@@ -497,6 +497,10 @@ There exists a wrapper `<span>` element around the backlinks part of each footno
 
 If you have any other question related to Padatika than the following, feel free to open an issue.
 
+### What does "Padatika" mean?
+
+It is the transliteration of the Bangla word "পাদটীকা" which means footnote.
+
 ### Can Padatika can show the footnote content in tooltip when hovering over the references?
 
 No, I have no plans to implement this in Padatika because it's impossible to implement it in just a few lines of code. I believe it's best to use a dedicated solution like [Tippy.js](https://atomiks.github.io/tippyjs/) for this, which appears to be a fantastic library. I haven't yet had the opportunity to experiment with it myself. If you do, I would greatly appreciate an article where you share your experience.
