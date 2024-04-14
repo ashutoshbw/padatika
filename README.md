@@ -4,6 +4,8 @@
 
 Got frustrated with managing footnotes manually? Padatika can help.
 
+For better viewing, [read this doc from Github](https://github.com/ashutoshbw/padatika/blob/v0.1.0/README.md).
+
 ## 🦄 Features
 
 - ✨ Sorts footnotes automatically.
@@ -324,7 +326,7 @@ It is the symbol that you will see at the start of the backlinks part of each fo
 
 Type:
 
-```ts
+```
 {
   jumpUp?: string;
   jumpBackUp?: string;
@@ -334,7 +336,7 @@ Type:
 
 Default value:
 
-```ts
+```js
 {
   jumpUp: 'Jump up',
   jumpBackUp: 'Jump back up',
