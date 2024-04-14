@@ -48,7 +48,7 @@ const defaultOptions: Options = {
   backlinksWrapperClassName: 'backlinks-wrapper',
 };
 
-export default function initPadatika(
+export default function padatika(
   categoryIdToCategoryIndicatorMap: {
     [x: string]: string;
   },
