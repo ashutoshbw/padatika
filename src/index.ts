@@ -25,7 +25,7 @@ interface Options {
     jumpUpTo?: string;
   };
   getBacklinkIdentifier?: (n: number) => string;
-  getListStyleTypeStr?: (n: string) => string;
+  getListStyleTypeStr?: (formattedNum: string) => string;
   ignoreIndicatorOfFirstCategory?: boolean;
   ignoreIndicatorOfCategory?: string;
   enableBrackets?: boolean;
@@ -74,9 +74,7 @@ export default function initPadatika(
   }
 
   if (getListStyleTypeStr === undefined) {
-    getListStyleTypeStr = (n: string) => {
-      return `${n}. `;
-    };
+    getListStyleTypeStr = (formattedNum: string) => `${formattedNum}. `;
   }
 
   jumpTexts = { ...defaultJumpTexts, ...jumpTexts };
