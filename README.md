@@ -240,7 +240,16 @@ wcho | Wancho digits
 
 See the [Unicode CLDR Project's `numbers.xml`](https://github.com/unicode-org/cldr/blob/main/common/bcp47/number.xml) file for up to date list of them.
 
-If some of the these format doesn't have implementation or you need to format/translate it in a different way, you can also pass a function to this option. This function takes in a javascript number and and should return a string of the formatted/translated number in your desired way.
+If some of the these format doesn't have implementation or you need to format/translate it in a different way, you can also pass a function to this option. This function takes in a javascript number and and should return a string of the formatted/translated number of your desired way.
+
+If you want to format the numbers in Bengali, here is an example:
+
+<details>
+  <summary>Click to see the example</summary>
+
+  Example
+</details>
+
 
 
 
