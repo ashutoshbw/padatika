@@ -135,6 +135,8 @@ Head over to [All option](#%EF%B8%8F-all-options) section to read their purpose 
 
 ### `numberFormat`
 
+Type: `string | ((n: number) => string)`
+
 You can use this option to easily change the language/format of numbers in reference supscripts and footnotes.
 
 For your convenience the following table describes all formats:
@@ -280,7 +282,13 @@ I smell something.<sup data-fnref>refs:something</sup>
 
 ### `dataAttributePostfix`
 
+Type: `string`
+
 By default Padatika looks for elements having the `data-fnref` data attribute to detect them as references to footnotes. This options allow you to choose a different data attribute for this purpose. For example if want `data-ref` instead of `data-fnref`, you could pass just the postfix part, that is, `'ref'` to this option.
 
 > [!CAUTION]
-> Since you might have lot of markdown/HTML files depended on this, changing this value would also require you to change the data attribute on each of these files. So it's better to stick with some specific value of this option from the start.
+> Since you might have a lot of markdown/HTML files depended on this, changing this value would also require you to change the data attribute on each of these files. So it's better to stick with some specific value of this option from the start.
+
+### `enableBacklinks`
+
+Type: `boolean`
