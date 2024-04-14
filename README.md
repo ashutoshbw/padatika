@@ -424,7 +424,7 @@ Code:
   padatika(
     { notes: 'N', refs: 'R' },
     {
-      getListStyleTypeStr: (formattedNum) => `[${formattedNum}]`,
+      getListStyleTypeStr: (formattedNum) => `[${formattedNum}] `,
     },
   );
 </script>
