@@ -70,9 +70,7 @@ export default function initPadatika(
   }: Options = defaultOptions,
 ) {
   if (getBacklinkIdentifier === undefined) {
-    getBacklinkIdentifier = (n: number) => {
-      return formatNumber(n + 1, numberFormat);
-    };
+    getBacklinkIdentifier = (n: number) => formatNumber(n, numberFormat);
   }
 
   if (getListStyleTypeStr === undefined) {
@@ -366,7 +364,7 @@ export default function initPadatika(
             backlinksWrapper.append(sup);
 
             backlink.href = `#${ref.id}`;
-            backlink.textContent = getBacklinkIdentifier!(i);
+            backlink.textContent = getBacklinkIdentifier!(i + 1);
             backlink.addEventListener('click', () => cleanupFunc());
 
             if (i == 0) {
