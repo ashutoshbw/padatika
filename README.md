@@ -380,6 +380,61 @@ Code:
     },
   );
 </script>
+I like cats.<sup data-fnref>notes:cats</sup>
+
+I like dogs.<sup data-fnref>notes:dogs</sup>
+
+The kitten is calling her mom.<sup data-fnref>notes:cats</sup>
+
+I smell something.<sup data-fnref>refs:something</sup>
+
+<h2 id="notes">Notes</h2>
+<ul>
+  <li>[cats] meow meow</li>
+  <li>[dogs] woof woof</li>
+</ul>
+
+<h2 id="refs">References</h2>
+<ul>
+  <li>[something] dog 💩</li>
+</ul>
+```
+
+</details>
+
+### `getListStyleTypeStr`
+
+Type: `(formattedNum: string) => string`
+
+Default value: ``(formattedNum: string) => `${formattedNum}. ` ``
+
+This option is used for determininig the footnotes numbering format. The function takes in the formatted number(which depends on the [`numberFormat`](#numberformat) option) and should return a string based on it.
+
+<details>
+<summary>Click to see an example</summary>
+
+![getListStyleTypeStr option example](./example-getListStyleTypeStr.png)
+
+Code:
+
+```html
+<script type="module">
+  import padatika from 'https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js';
+
+  padatika(
+    { notes: 'N', refs: 'R' },
+    {
+      getListStyleTypeStr: (formattedNum) => `[${formattedNum}]`,
+    },
+  );
+</script>
+
+I like cats.<sup data-fnref>notes:cats</sup>
+
+<h2 id="notes">Notes</h2>
+<ul>
+  <li>[cats] meow meow</li>
+</ul>
 ```
 
 </details>
