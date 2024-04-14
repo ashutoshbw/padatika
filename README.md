@@ -515,7 +515,7 @@ As a lazy person, I can relate to this. Unfortunately I can't make it shorter th
 
 However I managed to overcome it in a easy way in my [personal website](https://ashutoshbw.github.io/). I built my site using [Zola](https://www.getzola.org/). It transforms markdown to HTML and allows you do simple replacements on those HTML files efficiently. Here I replace `[<em>` with `<sup data-fnref>` and `</em>]` with `</sup>`. So in the markdown I can use the format `[_category_id:footnote_name_]`!
 
-Even if you don't use Zola, you can use your editor to do such replacements or create your own little snippet that is a keypress away(which I haven't experimented yet, but I think it is the best solution).
+Even if you don't use Zola, you can use your editor to do such replacements or create your own little snippet for your editor that you can invoke with minimal amount typing.
 
 ### Footnotes without a name, with an invalid name, or with a duplicate name do not appear on the rendered web page. Is that okay?
 
