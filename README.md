@@ -505,9 +505,9 @@ No, I have no plans to implement this in Padatika because it's impossible to imp
 
 You can install it using your favorite node package manager to do this. Just note that it exports a function as a default export, so you can import using any name.
 
-### Does Padatika help offers CSS?
+### Does Padatika offer styles?
 
-It has very minimal CSS implemented with JS that are unavoidable for good first experience. Except that I've no plan to prescribe styles to let the users be creative with their own styles.
+It has very minimal CSS implemented with JS that I find unavoidable for good first experience. Except that I've no plan to prescribe styles to let the users be creative with their own styles.
 
 ### Writing the markup for a footnote reference (`<sup data-fnref>category_id:footnote_name</sup>`) can be quite cumbersome. Is there a way to achieve the same purpose without having to type so much?
 
