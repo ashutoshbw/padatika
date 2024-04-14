@@ -107,7 +107,7 @@ I smell something.<sup data-fnref>refs:something</sup>
   <li>[something] dog 💩</li>
 </ul>
 ```
-  
+
 </details>
 
 ### `options`(optional)
@@ -142,100 +142,100 @@ For your convenience the following table describes all formats:
 <details>
   <summary>Click to expand table</summary>
 
-Format | Description
---- | ---
-adlm | Adlam digits
-ahom | Ahom digits
-arab | Arabic-Indic digits
-arabext | Extended Arabic-Indic digits
-armn | Armenian upper case numerals — algorithmic
-armnlow | Armenian lower case numerals — algorithmic
-bali | Balinese digits
-beng | Bengali digits
-bhks | Bhaiksuki digits
-brah | Brahmi digits
-cakm | Chakma digits
-cham | Cham digits
-cyrl | Cyrillic numerals — algorithmic
-deva | Devanagari digits
-diak | Dives Akuru digits
-ethi | Ethiopic numerals — algorithmic
-finance | Financial numerals — may be algorithmic
-fullwide | Full width digits
-geor | Georgian numerals — algorithmic
-gong | Gunjala Gondi digits
-gonm | Masaram Gondi digits
-grek | Greek upper case numerals — algorithmic
-greklow | Greek lower case numerals — algorithmic
-gujr | Gujarati digits
-guru | Gurmukhi digits
-hanidays | Han-character day-of-month numbering for lunar/other traditional calendars
-hanidec | Positional decimal system using Chinese number ideographs as digits
-hans | Simplified Chinese numerals — algorithmic
-hansfin | Simplified Chinese financial numerals — algorithmic
-hant | Traditional Chinese numerals — algorithmic
-hantfin | Traditional Chinese financial numerals — algorithmic
-hebr | Hebrew numerals — algorithmic
-hmng | Pahawh Hmong digits
-hmnp | Nyiakeng Puachue Hmong digits
-java | Javanese digits
-jpan | Japanese numerals — algorithmic
-jpanfin | Japanese financial numerals — algorithmic
-jpanyear | Japanese first-year Gannen numbering for Japanese calendar
-kali | Kayah Li digits
-kawi | Kawi digits
-khmr | Khmer digits
-knda | Kannada digits
-lana | Tai Tham Hora (secular) digits
-lanatham | Tai Tham Tham (ecclesiastical) digits
-laoo | Lao digits
-latn | Latin digits
-lepc | Lepcha digits
-limb | Limbu digits
-mathbold | Mathematical bold digits
-mathdbl | Mathematical double-struck digits
-mathmono | Mathematical monospace digits
-mathsanb | Mathematical sans-serif bold digits
-mathsans | Mathematical sans-serif digits
-mlym | Malayalam digits
-modi | Modi digits
-mong | Mongolian digits
-mroo | Mro digits
-mtei | Meetei Mayek digits
-mymr | Myanmar digits
-mymrshan | Myanmar Shan digits
-mymrtlng | Myanmar Tai Laing digits
-nagm | Nag Mundari digits
-native | Native digits
-newa | Newa digits
-nkoo | N'Ko digits
-olck | Ol Chiki digits
-orya | Oriya digits
-osma | Osmanya digits
-rohg | Hanifi Rohingya digits
-roman | Roman upper case numerals — algorithmic
-romanlow | Roman lowercase numerals — algorithmic
-saur | Saurashtra digits
-segment | Legacy computing segmented digits
-shrd | Sharada digits
-sind | Khudawadi digits
-sinh | Sinhala Lith digits
-sora | Sora_Sompeng digits
-sund | Sundanese digits
-takr | Takri digits
-talu | New Tai Lue digits
-taml | Tamil numerals — algorithmic
-tamldec | Modern Tamil decimal digits
-tnsa | Tangsa digits
-telu | Telugu digits
-thai | Thai digits
-tirh | Tirhuta digits
-tibt | Tibetan digits
-traditio | Traditional numerals — may be algorithmic
-vaii | Vai digits
-wara | Warang Citi digits
-wcho | Wancho digits
-  
+| Format   | Description                                                                |
+| -------- | -------------------------------------------------------------------------- |
+| adlm     | Adlam digits                                                               |
+| ahom     | Ahom digits                                                                |
+| arab     | Arabic-Indic digits                                                        |
+| arabext  | Extended Arabic-Indic digits                                               |
+| armn     | Armenian upper case numerals — algorithmic                                 |
+| armnlow  | Armenian lower case numerals — algorithmic                                 |
+| bali     | Balinese digits                                                            |
+| beng     | Bengali digits                                                             |
+| bhks     | Bhaiksuki digits                                                           |
+| brah     | Brahmi digits                                                              |
+| cakm     | Chakma digits                                                              |
+| cham     | Cham digits                                                                |
+| cyrl     | Cyrillic numerals — algorithmic                                            |
+| deva     | Devanagari digits                                                          |
+| diak     | Dives Akuru digits                                                         |
+| ethi     | Ethiopic numerals — algorithmic                                            |
+| finance  | Financial numerals — may be algorithmic                                    |
+| fullwide | Full width digits                                                          |
+| geor     | Georgian numerals — algorithmic                                            |
+| gong     | Gunjala Gondi digits                                                       |
+| gonm     | Masaram Gondi digits                                                       |
+| grek     | Greek upper case numerals — algorithmic                                    |
+| greklow  | Greek lower case numerals — algorithmic                                    |
+| gujr     | Gujarati digits                                                            |
+| guru     | Gurmukhi digits                                                            |
+| hanidays | Han-character day-of-month numbering for lunar/other traditional calendars |
+| hanidec  | Positional decimal system using Chinese number ideographs as digits        |
+| hans     | Simplified Chinese numerals — algorithmic                                  |
+| hansfin  | Simplified Chinese financial numerals — algorithmic                        |
+| hant     | Traditional Chinese numerals — algorithmic                                 |
+| hantfin  | Traditional Chinese financial numerals — algorithmic                       |
+| hebr     | Hebrew numerals — algorithmic                                              |
+| hmng     | Pahawh Hmong digits                                                        |
+| hmnp     | Nyiakeng Puachue Hmong digits                                              |
+| java     | Javanese digits                                                            |
+| jpan     | Japanese numerals — algorithmic                                            |
+| jpanfin  | Japanese financial numerals — algorithmic                                  |
+| jpanyear | Japanese first-year Gannen numbering for Japanese calendar                 |
+| kali     | Kayah Li digits                                                            |
+| kawi     | Kawi digits                                                                |
+| khmr     | Khmer digits                                                               |
+| knda     | Kannada digits                                                             |
+| lana     | Tai Tham Hora (secular) digits                                             |
+| lanatham | Tai Tham Tham (ecclesiastical) digits                                      |
+| laoo     | Lao digits                                                                 |
+| latn     | Latin digits                                                               |
+| lepc     | Lepcha digits                                                              |
+| limb     | Limbu digits                                                               |
+| mathbold | Mathematical bold digits                                                   |
+| mathdbl  | Mathematical double-struck digits                                          |
+| mathmono | Mathematical monospace digits                                              |
+| mathsanb | Mathematical sans-serif bold digits                                        |
+| mathsans | Mathematical sans-serif digits                                             |
+| mlym     | Malayalam digits                                                           |
+| modi     | Modi digits                                                                |
+| mong     | Mongolian digits                                                           |
+| mroo     | Mro digits                                                                 |
+| mtei     | Meetei Mayek digits                                                        |
+| mymr     | Myanmar digits                                                             |
+| mymrshan | Myanmar Shan digits                                                        |
+| mymrtlng | Myanmar Tai Laing digits                                                   |
+| nagm     | Nag Mundari digits                                                         |
+| native   | Native digits                                                              |
+| newa     | Newa digits                                                                |
+| nkoo     | N'Ko digits                                                                |
+| olck     | Ol Chiki digits                                                            |
+| orya     | Oriya digits                                                               |
+| osma     | Osmanya digits                                                             |
+| rohg     | Hanifi Rohingya digits                                                     |
+| roman    | Roman upper case numerals — algorithmic                                    |
+| romanlow | Roman lowercase numerals — algorithmic                                     |
+| saur     | Saurashtra digits                                                          |
+| segment  | Legacy computing segmented digits                                          |
+| shrd     | Sharada digits                                                             |
+| sind     | Khudawadi digits                                                           |
+| sinh     | Sinhala Lith digits                                                        |
+| sora     | Sora_Sompeng digits                                                        |
+| sund     | Sundanese digits                                                           |
+| takr     | Takri digits                                                               |
+| talu     | New Tai Lue digits                                                         |
+| taml     | Tamil numerals — algorithmic                                               |
+| tamldec  | Modern Tamil decimal digits                                                |
+| tnsa     | Tangsa digits                                                              |
+| telu     | Telugu digits                                                              |
+| thai     | Thai digits                                                                |
+| tirh     | Tirhuta digits                                                             |
+| tibt     | Tibetan digits                                                             |
+| traditio | Traditional numerals — may be algorithmic                                  |
+| vaii     | Vai digits                                                                 |
+| wara     | Warang Citi digits                                                         |
+| wcho     | Wancho digits                                                              |
+
 </details>
 
 See the [Unicode CLDR Project's `numbers.xml`](https://github.com/unicode-org/cldr/blob/main/common/bcp47/number.xml) file for up to date list of them.
@@ -247,11 +247,40 @@ If you want to format the numbers in Bengali, here is an example:
 <details>
   <summary>Click to see the example</summary>
 
-  Example
+![An example with numbers in Bengali](./example-beng.png)
+
+Codes:
+
+```html
+<script type="module">
+  import padatika from 'https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js';
+
+  padatika({ notes: 'N', refs: 'R' }, { numberFormat: 'beng' });
+</script>
+
+I like cats.<sup data-fnref>notes:cats</sup>
+
+I like dogs.<sup data-fnref>notes:dogs</sup>
+
+I smell something.<sup data-fnref>refs:something</sup>
+
+<h2 id="notes">Notes</h2>
+<ul>
+  <li>[cats] meow meow</li>
+  <li>[dogs] woof woof</li>
+</ul>
+
+<h2 id="refs">References</h2>
+<ul>
+  <li>[something] dog 💩</li>
+</ul>
+```
+
 </details>
 
+### `dataAttributePostfix`
 
+By default Padatika looks for elements having the `data-fnref` data attribute to detect them as references to footnotes. This options allow you to choose a different data attribute for this purpose. For example if want `data-ref` instead of `data-fnref`, you could pass just the postfix part, that is, `'ref'` to this option.
 
-
-
-
+> [!CAUTION]
+> Since you might have lot of markdown/HTML files depended on this, changing this value would also require you to change the data attribute on each of these files. So it's better to stick with some specific value of this option from the start.
