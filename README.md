@@ -519,7 +519,7 @@ Even if you don't use Zola, you can use your editor to do such replacements or c
 
 ### Footnotes without a name, with an invalid name, or with a duplicate name do not appear on the rendered web page. Is that okay?
 
-Yes. It is designed this way give you a clean result. But if you open your browser console, you will see warnings or errors for them to help you detect them.
+Yes. It is designed this way give you a clean result. But if you open your browser console, you will get warnings or errors for them to help you detect them.
 
 ## 🙏 Acknowledgement
 
