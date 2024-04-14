@@ -349,3 +349,41 @@ The `jumpUp` and `jumpBackUp` property values are used for showing tooltip text 
 The `jumpUpTo` is solely for screen reader users to give them some context to the backlink superscripts(which appear if you have multiple references to this footnote) that holds backlinks next to the backlink symbol.
 
 You might want to translate the English text values for these properties if your content is in a different language.
+
+### `getBacklinkIdentifier`
+
+Type: `(n: number) => string`
+
+Default Behavior: It uses [`numberFormat`](#numberformat) option to determine the format of the each individual backlink superscripts which exist next to [backlink symbol](#backlinksymbol).
+
+Here `n` is a natural number. `1`, `2` and so on relates to the first, second and so on backlink superscripts. The returned string is placed in the corresponding position.
+
+Following is an example that uses English alphabets instead of numbers for backlink superscripts.
+
+<details>
+<summary>Click to see the example</summary>
+
+![Example of getBacklinkIdentifier option](./example-getBacklinkIndentifier.png)
+
+Code:
+
+```html
+<script type="module">
+  import padatika from 'https://cdn.jsdelivr.net/npm/padatika@0.1.0/dist/index.js';
+
+  padatika(
+    { notes: 'N', refs: 'R' },
+    {
+      getBacklinkIdentifier: (n) => {
+        return 'abcdefghijklmnopqrstuvwxyz'[n - 1];
+      },
+    },
+  );
+</script>
+```
+
+</details>
+
+## 🙏 Acknowledgement
+
+I stole the design of footnote backlinks from Wikipedia.
