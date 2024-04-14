@@ -1,7 +1,7 @@
 {
   "name": "padatika",
   "version": "0.1.0",
-  "description": "A customizable footnote system inspired by wikipedia.",
+  "description": "A modern footnote system for the web.",
   "type": "module",
   "types": "./dist/index.d.ts",
   "browser": "./dist/index.js",
