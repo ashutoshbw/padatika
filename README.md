@@ -137,6 +137,8 @@ Head over to [All option](#%EF%B8%8F-all-options) section to read their purpose 
 
 Type: `string | ((n: number) => string)`
 
+Default value: `latn`(i.e. [Latin digits](https://en.wikipedia.org/wiki/Arabic_numerals))
+
 You can use this option to easily change the language/format of numbers in reference supscripts and footnotes.
 
 For your convenience the following table describes all formats:
@@ -251,7 +253,7 @@ If you want to format the numbers in Bengali, here is an example:
 
 ![An example with numbers in Bengali](./example-beng.png)
 
-Codes:
+Code:
 
 ```html
 <script type="module">
@@ -284,6 +286,8 @@ I smell something.<sup data-fnref>refs:something</sup>
 
 Type: `string`
 
+Default value: `fnref`
+
 By default Padatika looks for elements having the `data-fnref` data attribute to detect them as references to footnotes. This options allow you to choose a different data attribute for this purpose. For example if want `data-ref` instead of `data-fnref`, you could pass just the postfix part, that is, `'ref'` to this option.
 
 > [!CAUTION]
@@ -292,3 +296,54 @@ By default Padatika looks for elements having the `data-fnref` data attribute to
 ### `enableBacklinks`
 
 Type: `boolean`
+
+Default value: `true`
+
+This option allows you to turn on/off backlinks in the footnotes.
+
+### `backlinkPos`
+
+Type: `'start' | 'end'`
+
+Default value: `start`
+
+It controls where the backlinks are displayed — to the `'start'` or `'end'` of the footnotes.
+
+### `backlinkSymbol`
+
+Type: `string`
+
+Default value: `↑`
+
+It is the symbol that you will see at the start of the backlinks part of each footnote.
+
+> [!NOTE]
+> If you have just one reference to a footnote, then this symbol is a link that points to that reference. If you have multiple reference to a footnote then initially this symbol is just text but when you click on any of its references, this symbol will turn into a link pointing back to that specific reference that you clicked.
+
+### `jumpTexts`
+
+Type:
+
+```ts
+{
+  jumpUp?: string;
+  jumpBackUp?: string;
+  jumpUpTo?: string;
+}
+```
+
+Default value:
+
+```ts
+{
+  jumpUp: 'Jump up',
+  jumpBackUp: 'Jump back up',
+  jumpUpTo: 'Jump up to: ',
+}
+```
+
+The `jumpUp` and `jumpBackUp` property values are used for showing tooltip text and `aria-label`(useful for screen reader users) for the backlink symbol.
+
+The `jumpUpTo` is solely for screen reader users to give them some context to the backlink superscripts(which appear if you have multiple references to this footnote) that holds backlinks next to the backlink symbol.
+
+You might want to translate the English text values for these properties if your content is in a different language.
