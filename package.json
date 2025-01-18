@@ -1,14 +1,14 @@
 {
   "name": "padatika",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A modern footnote system for the web.",
   "type": "module",
   "types": "./dist/index.d.ts",
-  "browser": "./dist/index.js",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
+        "browser": "./dist/index.js",
         "default": "./dist/index.js"
       }
     }
@@ -36,5 +36,6 @@
     "tsup": "^8.0.2",
     "typescript": "^5.4.3",
     "typescript-eslint": "^7.6.0"
-  }
+  },
+  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
 }
