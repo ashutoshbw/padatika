@@ -493,7 +493,7 @@ Default value: `'backlinks-wrapper'`
 
 There exists a wrapper `<span>` element around the backlinks part of each footnote. This element gets its class name from this option.
 
-## 🤔 Frequently Asked Questions <sub>(that no one asked yet)</sub>
+## 🤔 Frequently Asked Questions
 
 If you have any other question related to Padatika than the following, feel free to open an issue.
 
@@ -524,7 +524,3 @@ Even if you don't use Zola, you can use your editor to do such replacements or c
 ### Footnotes without a name, with an invalid name, or with a duplicate name do not appear on the rendered web page. Is that okay?
 
 Yes. It is designed this way give you a clean result. But if you open your browser console, you will get warnings or errors for them to help you detect them.
-
-## 🙏 Acknowledgement
-
-I stole the essence of footnote backlinks from Wikipedia.
